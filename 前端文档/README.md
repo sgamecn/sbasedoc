@@ -20,7 +20,7 @@
 
 [APPLE登录](#apple)
 
-登录通用回复[LoginResult](#LoginResult)
+[登录通用回复](#LoginResult)
 
 [实名认证](#realcheck)
 
