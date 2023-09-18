@@ -27,7 +27,8 @@
 
 ## 支付
 
-[微信支付](#wechatpay)
+[apple支付](#applepay)
+
 
 #### <a id="EM">EM登录</a>
 
@@ -238,7 +239,8 @@ apple支付需要特殊处理
 
 ![支付流程图](../pay.png)
 
-#### 苹果支付回调 /AppleVerifyIdTokenV1 (前端)
+#### <a id="applepay">苹果支付回调</a>
+路径：/AppleVerifyIdTokenV1
 ```go
 // 苹果支付回调
 type ApplePayVerifyIdTokenV1 struct {
