@@ -207,7 +207,7 @@ type WlcCheckReq struct {
     IdNum string `json:"idNum"` // 用户身份证号码
 }
 
-type CheckResult struct {
+type WlcResp struct {
     Code int `json:"code"` //参考 code中台常量定义
 }
 ```
@@ -220,6 +220,7 @@ apple支付需要特殊处理
 [apple支付接入文档](https://developer.apple.com/documentation/passkit/apple_pay/offering_apple_pay_in_your_app)
 
 ![支付流程图](../pay.png)
+对接中台方面，前端只处理第6步骤：支付回调上报，详情如图
 
 #### <a id="applepay">苹果支付回调</a>
 路径：/AppleVerifyIdTokenV1
