@@ -28,6 +28,12 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 [实名认证](#realcheck)
 
+[发短信验证码](#SendMobileMessage)
+
+[绑定手机号](#BindMobile)
+
+[手机号登录](#MobileLogin)
+
 ## 支付
 
 [apple支付](#applepay)
@@ -167,9 +173,71 @@ type AppleLoginRequest struct {
     Code string `json:"code"`
 }
 ```
+
 [通用登录回复](#LoginResult)
 
-### <a id="LoginResult">通用登录回复</a> 
+### <a id="SendMobileMessage">发短信验证码</a> 
+路径：/SendMobileMessage
+
+```
+Method: POST
+ContentType: application/json
+```
+
+###### 请求参数
+```go
+type SendMobileMessageRequest struct {
+    Namespace int    `json:"namespace"`
+    Mobile    string `json:"mobile"` //手机号
+    SendType  string `json:"send_type"` //发送类型 1绑定 2登录
+}
+```
+
+[code中台常量定义](#code)
+
+### <a id="BindMobile">渠道用户绑定手机</a> 
+路径：/BindMobile
+
+```
+Method: POST
+ContentType: application/json
+```
+
+###### 请求参数
+```go
+type BindMobileRequest struct {
+    Namespace    int    `json:"namespace"`
+    Mobile       string `json:"mobile"` //手机号
+    DeviceNo     string `json:"device_no"` //设备号
+    ValidateCode string `json:"validate_code"` //验证码
+    ChannelId    string `json:"channel_id"` //渠道ID
+    CUid         string `json:"c_uid"` //渠道用户ID
+}
+```
+
+[code中台常量定义](#code)
+
+### <a id="MobileLogin">手机号登录</a> 
+路径：/MobileLogin
+
+```
+Method: POST
+ContentType: application/json
+```
+
+###### 请求参数
+```go
+type MobileLoginRequest struct {
+    Namespace    int    `json:"namespace"`
+    Mobile       string `json:"mobile"` //手机号
+    DeviceNo     string `json:"device_no"` //设备号
+    ValidateCode string `json:"validate_code"` //验证码
+}
+```
+
+[code中台常量定义](#code)
+
+[通用登录回复](#LoginResult)
 
 ```go
 type LoginResult struct {
