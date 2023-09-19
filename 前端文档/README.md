@@ -6,6 +6,10 @@
 
 ## 登录
 
+登录流程图
+EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ.....
+![登录流程图](../image/login.png)
+
 [EM登录](#EM)
 
 [微信登录](#wechat)
@@ -219,7 +223,7 @@ apple支付需要特殊处理
 
 [apple支付接入文档](https://developer.apple.com/documentation/passkit/apple_pay/offering_apple_pay_in_your_app)
 
-![支付流程图](../pay.png)
+![支付流程图](../image/pay.png)
 对接中台方面，前端只处理第6步骤：支付回调上报，详情如图
 
 #### <a id="applepay">苹果支付回调</a>
