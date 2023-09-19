@@ -237,9 +237,12 @@ type ApplePayVerifyIdTokenV1 struct {
 }
 
 type ApplePayVerifyIdTokenV1Rsp struct {
-    Code int `json:"code"` //参考 code中台常量定义
+    Code int `json:"code"` //参考 code中台常量定义 
+    SuccessTransactionList []string `json:"success_transaction_list"`  
 }
 ```
+ApplePayVerifyIdTokenV1Rsp 参数 SuccessTransactionList 为成功的[transaction_id](https://developer.apple.com/documentation/appstorereceipts/responsebody/latest_receipt_info)
+
 [code中台常量定义](#code)
 
 ### <a id="code">code中台常量定义</a>
