@@ -192,7 +192,7 @@ type SendGoodsReq struct {
 	Token   string `json:"token"`
 }
 
-//恢复参数
+//响应参数
 SendGoodsResp struct {
 	Code int `json:"code"`
 }
