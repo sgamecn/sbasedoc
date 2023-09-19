@@ -292,6 +292,11 @@ apple支付需要特殊处理
 [apple支付接入文档](https://developer.apple.com/documentation/passkit/apple_pay/offering_apple_pay_in_your_app)
 
 ![支付流程图](../image/ApplePay.png)
+
+接入appleSDK 进行下单时，请设置applicationUsername 为游戏服务器回传订单号
+
+[SetApplicationUsername](https://docs.unity3d.com/Packages/com.unity.purchasing@3.0/api/UnityEngine.Purchasing.IAppleExtensions.html#UnityEngine_Purchasing_IAppleExtensions_SetApplicationUsername_System_String_)
+
 对接中台方面，前端只处理第6步骤：支付回调上报，详情如图
 
 #### <a id="applepay">苹果支付回调</a>
