@@ -7,16 +7,9 @@
 
 [用户行为上传](#usertrace)
 ### 支付
-#### 支付下单
-[微信下单](#wechat)
+[支付下单](#transaction)
 
-[支付宝下单](#alipay)
-
-[苹果下单](#applepay)
-
-#### 支付发货
-
-[发货](#sendgoods)
+[支付发货](#sendgoods)
 
 ---
 ### <a id="login">用户登录</a>
@@ -56,35 +49,63 @@ type WlcResp struct {
 PF常用支付流程图
 ![支付流程图](../image/pay.png)
 
-支付通用货币结构
+<a id="transaction">支付下单</a>
+
+```
+Method: POST
+ContentType: application/json
+```
+
 ```go
+
+//支付类型
+const (
+    TA_WECHAT TypeTransaction = "WX" // 微信
+    TA_ALI    TypeTransaction = "AL" // 支付宝
+    TA_APPLE  TypeTransaction = "AP" // 苹果
+)
+
+type TypeTransaction string
+
+type Amount struct {
+    Total    float64 `json:"total"`   // 总金额
+    Currency string  `json:"currency"`  // 货币类型
+}
+
+//下单请求
+type TransactionRequest struct {
+    GameOrderId   string          `json:"game_order_id"`    // 游戏订单号，可不填
+    Desc          string          `json:"description"`    // 商品描述
+    Amount        Amount          `json:"amount"`      // 金额
+    GameNotifyUrl string          `json:"game_notify_url"`  // 游戏回调地址
+    Attach        string          `json:"attach"`     // 服务器透传参数,回调时原样返回
+    SGameId       string          `json:"s_game_id"`    // 游戏用户标识
+    Type          TypeTransaction `json:"type"`       // 支付类型
+    GameId        string          `json:"game_id"`   // 游戏ID 由平台分配 预留字段可不填
+    IsSandbox     bool            `json:"is_sandbox"`   // 是否沙盒测试 仅苹果支付有效 默认false 
+}
+
+//下单响应
+type TransactionResponse struct {
+    Code  int              `json:"code"`
+    Type  TypeTransaction  `json:"type"`
+    Param TransactionParam `json:"param"`
+}
+
+type TransactionParam struct {
+    WeChatAppPayParam        *wechat.AppPayParams `json:"wechat_app_pay_param"`
+    AliOrderInfo             string               `json:"ali_order_info"`
+    AppleApplicationUsername string               `json:"apple_application_username"`
+}
+
 type Amount struct {
     Total    float64 `json:"total"`
     Currency string  `json:"currency"`
 }
-```
 
-### <a id="wechatpay">微信下单</a>
-路径：/WechatTransaction
-```go
-// 微信下单请求参数
-type WeChatTransactionRequest struct {
-    GameOrderId   string `json:"game_order_id"` //游戏订单号
-    Desc          string `json:"description"`   //商品描述
-    Amount        Amount `json:"amount"`    //金额
-    GameNotifyUrl string `json:"game_notify_url"`  //游戏回调地址
-    Attach        string `json:"attach"`    //透传数据
-    SgameId       string `json:"sgame_id"`  //SgameId  玩家游戏ID
-}
-
-// 响应参数
-type WeChatTransactionResponse struct {
-    Code        int                  `json:"code"`
-    AppPayParam *wechat.AppPayParams `json:"app_pay_param"`
-}
-// AppPayParams 为微信下单后返回的参数，直接传给客户端调起微信支付
+//wechat.AppPayParams
 type AppPayParams struct {
-    Appid     string `json:"appid"`
+    Appid     string `json:"appid"`  
     Partnerid string `json:"partnerid"`
     Prepayid  string `json:"prepayid"`
     Package   string `json:"package"`
@@ -94,94 +115,8 @@ type AppPayParams struct {
 }
 ```
 
+<a id="sendgoods">发货</a>
 
-### <a id="alipay">支付宝下单</a>
-
-路径：/AliTransaction
-
-```
-Method: POST
-ContentType: application/json
-```
-```go
-// 支付宝下单请求参数
-type AliTransactionRequest struct {
-    GameOrderId   string `json:"game_order_id"` //游戏订单号
-    Subject       string `json:"subject"`      //商品标题
-    Amount        Amount `json:"amount"`    //金额
-    Attach        string `json:"attach"`    //透传数据
-    GameNotifyUrl string `json:"game_notify_url"` //游戏回调地址
-    SgameId       string `json:"sgame_id"`  //SgameId  玩家游戏ID
-    }
-}
-// 响应参数
-AliTransactionResponse struct {
-	Code    int    `json:"code"`
-    OrderInfo string `json:"order_info"`
-}
-
-//OrderInfo 为支付宝下单后返回的参数，直接传给客户端调起支付宝支付
-OrderInfo JSON 格式
-type TradePay struct {
-    ErrorResponse
-    TradeNo             string           `json:"trade_no,omitempty"`
-    OutTradeNo          string           `json:"out_trade_no,omitempty"`
-    BuyerLogonId        string           `json:"buyer_logon_id,omitempty"`
-    TotalAmount         string           `json:"total_amount,omitempty"`
-    ReceiptAmount       string           `json:"receipt_amount,omitempty"`
-    BuyerPayAmount      string           `json:"buyer_pay_amount,omitempty"`
-    PointAmount         string           `json:"point_amount,omitempty"`
-    InvoiceAmount       string           `json:"invoice_amount,omitempty"`
-    FundBillList        []*TradeFundBill `json:"fund_bill_list"`
-    StoreName           string           `json:"store_name,omitempty"`
-    BuyerUserId         string           `json:"buyer_user_id,omitempty"`
-    DiscountGoodsDetail string           `json:"discount_goods_detail,omitempty"`
-    AsyncPaymentMode    string           `json:"async_payment_mode,omitempty"`
-    VoucherDetailList   []*VoucherDetail `json:"voucher_detail_list"`
-    AdvanceAmount       string           `json:"advance_amount,omitempty"`
-    AuthTradePayMode    string           `json:"auth_trade_pay_mode,omitempty"`
-    MdiscountAmount     string           `json:"mdiscount_amount,omitempty"`
-    DiscountAmount      string           `json:"discount_amount,omitempty"`
-    CreditPayMode       string           `json:"credit_pay_mode"`
-    CreditBizOrderId    string           `json:"credit_biz_order_id"`
-}
-```
-
-#### <a id="applepay">苹果支付 </a>
-
-路径：/AppleTransaction
-
-APPLE支付流程图
-
-![支付流程图](../image/Applepay.png)
-```
-Method: POST
-ContentType: application/json
-```
-
-```go
-// 苹果下单请求参数
-type AppleTransactionRequest struct {
-	GameOrderId   string `json:"game_order_id"`     //游戏订单号
-	Amount        Amount `json:"amount"`        //金额
-	ProductID     string `json:"product_id"`    //商品ID APPLE 定义的商品ID
-	Attach        string `json:"attach"`    //透传数据
-	GameNotifyUrl string `json:"game_notify_url"`   //游戏回调地址
-	SgameId       string `json:"sgame_id"`  //SgameId  玩家游戏ID
-	GameId        string `json:"game_id"` //游戏ID 预留 可不填
-	IsSandBox     bool   `json:"is_sand_box"`       //是否沙盒测试
-    }
-}
-
-//响应参数
-type AppleTransactionResponse struct {
-    Code                int    `json:"code"`
-    ApplicationUsername string `json:"application_username"` //成功订单号
-}
-
-```
-
-#### <a id="sendgoods">发货</a>
 服务器实现回调
 
 ```go
