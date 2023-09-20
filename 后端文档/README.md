@@ -147,7 +147,7 @@ SendGoodsResp struct {
 }
 ```
 
-<a id="sign">签名规则</a>
+### <a id="sign">签名规则</a>
 
 SGameId: 游戏用户标识
 
