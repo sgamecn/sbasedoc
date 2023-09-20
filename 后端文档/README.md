@@ -67,9 +67,10 @@ const (
 
 type TypeTransaction string
 
+//货币信息
 type Amount struct {
     Total    float64 `json:"total"`   // 总金额
-    Currency string  `json:"currency"`  // 货币类型
+    Currency string  `json:"currency"`  // 货币类型 可不填，不填情况下默认为 CNY：人民币
 }
 
 //下单请求
@@ -92,15 +93,11 @@ type TransactionResponse struct {
     Param TransactionParam `json:"param"`
 }
 
+//掉起支付参数
 type TransactionParam struct {
     WeChatAppPayParam        *wechat.AppPayParams `json:"wechat_app_pay_param"`
     AliOrderInfo             string               `json:"ali_order_info"`
     AppleApplicationUsername string               `json:"apple_application_username"`
-}
-
-type Amount struct {
-    Total    float64 `json:"total"`
-    Currency string  `json:"currency"`
 }
 
 //wechat.AppPayParams
