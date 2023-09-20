@@ -136,8 +136,8 @@ TransactionRequest 中的 Sign 字段：
 ```go
 //通知参数
 type SendGoodsReq struct {
-	OrderId string `json:"order_id"` // 游戏订单ID => TransactionRequest.GameOrderId
-	Attach  string `json:"attach"`
+    OrderId string `json:"order_id"` // 游戏订单ID => TransactionRequest.GameOrderId
+    Attach  string `json:"attach"`
     Sign    string `json:"sign"`    // 签名 详见签名规则
 }
 
