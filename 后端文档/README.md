@@ -11,6 +11,8 @@
 
 [支付发货](#sendgoods)
 
+[签名规则](#sign)
+
 ---
 ### <a id="login">用户登录</a>
 EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ.....
@@ -75,15 +77,16 @@ type Amount struct {
 
 //下单请求
 type TransactionRequest struct {
-    GameOrderId   string          `json:"game_order_id"`    // 游戏订单号，可不填
-    Desc          string          `json:"description"`    // 商品描述
-    Amount        Amount          `json:"amount"`      // 金额
+    GameOrderId   string          `json:"game_order_id"`  // 游戏订单ID
+    Desc          string          `json:"description"`      // 订单描述
+    Amount        Amount          `json:"amount"`        // 货币信息
     GameNotifyUrl string          `json:"game_notify_url"`  // 游戏回调地址
-    Attach        string          `json:"attach"`     // 服务器透传参数,回调时原样返回
+    Attach        string          `json:"attach"`     // 附加信息 服务器透传，回调时原样返回
     SGameId       string          `json:"s_game_id"`    // 游戏用户标识
     Type          TypeTransaction `json:"type"`       // 支付类型
-    GameId        string          `json:"game_id"`   // 游戏ID 由平台分配 预留字段可不填
-    IsSandbox     bool            `json:"is_sandbox"`   // 是否沙盒测试 仅苹果支付有效 默认false 
+    GameId        string          `json:"game_id"`  // 游戏ID 由中台分配,具体ID见签名规则
+    IsSandbox     bool            `json:"is_sandbox"`   // 是否沙盒测试 仅苹果支付有效 默认为false
+    Sign          string          `json:"sign"`    // 签名 详见签名规则
 }
 
 //下单响应
@@ -112,6 +115,20 @@ type AppPayParams struct {
 }
 ```
 
+<a id="sign">签名规则</a>
+
+SGameId: 游戏用户标识
+
+YZR: 101
+
+TransactionRequest 中的 SGameId 字段为上述中SGameID
+
+TransactionRequest 中的 Sign 字段：
+
+签名规则为：MD5(游戏用户标识 + "-" + TransactionRequest.GameNotifyUrl + "-" + TransactionRequest.GameOrderId)  
+
+签名规则中TransactionRequest参数 均为下单请求中参数
+
 ### <a id="sendgoods">支付发货</a>
 
 服务器实现回调
@@ -119,9 +136,9 @@ type AppPayParams struct {
 ```go
 //通知参数
 type SendGoodsReq struct {
-	OrderId string `json:"order_id"`
+	OrderId string `json:"order_id"` // 游戏订单ID => TransactionRequest.GameOrderId
 	Attach  string `json:"attach"`
-	Token   string `json:"token"`
+    Sign    string `json:"sign"`    // 签名 详见签名规则
 }
 
 //响应参数
@@ -129,6 +146,20 @@ SendGoodsResp struct {
 	Code int `json:"code"`
 }
 ```
+
+<a id="sign">签名规则</a>
+
+SGameId: 游戏用户标识
+
+YZR: 101
+
+TransactionRequest 中的 SGameId 字段为上述中SGameID
+
+TransactionRequest 中的 Sign 字段：
+
+签名规则为：MD5(游戏用户标识 + "-" + TransactionRequest.GameNotifyUrl + "-" + TransactionRequest.GameOrderId)
+
+签名规则中TransactionRequest参数 均为下单请求中参数
 
 ### <a id="code">code中台常量定义</a>
 ```go
@@ -149,6 +180,8 @@ const (
     WLC_TRACE_ERROR        = 166 //wlc上报失败
     WLC_CHECH_ERROR        = 166 //wlc校验失败
     WLC_QUERY_ERROR        = 167 //wlc查询失败
+    SIGN_ERROR             = 168 //签名错误
+    SGAME_ID_NOT_EXIST     = 169 //sgame_id不存在
     CODE_NOT_FOUND         = 404 //APPLE资源不存在
     CODE_SERVER_ERROR      = 500 //APPLE服务器错误
 )
