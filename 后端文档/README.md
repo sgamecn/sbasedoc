@@ -49,7 +49,7 @@ type WlcResp struct {
 PF常用支付流程图
 ![支付流程图](../image/pay.png)
 
-<a id="transaction">支付下单</a>
+### <a id="transaction">支付下单</a>
 
 ```
 Method: POST
@@ -112,7 +112,7 @@ type AppPayParams struct {
 }
 ```
 
-<a id="sendgoods">发货</a>
+### <a id="sendgoods">支付发货</a>
 
 服务器实现回调
 
