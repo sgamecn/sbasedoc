@@ -160,22 +160,18 @@ type SendGoodsResp struct {
 
 ## <a id="sign">后端签名规则</a>
 ```go
-SGameId: 游戏标识
+游戏标识: 后端密匙
 
-YZR: 101
-
-SGameId: 后端密匙
-
-YZR: A798138F62D303BFC816352120747AFC
+YZR: A798138F62D303BFC816352120747AFC // 影之刃测试，正式服会有变动
 ```
 
-请求消息中 SGameId 字段为上述中SGameID
+请求消息中 SGameId 字段为上述中游戏标识
 
 请求消息中的 Sign 字段：
 
-签名规则为：MD5(游戏标识 + "-" + 后端密匙 + "-" + ReqTime)
+    签名规则为：MD5(游戏标识 + "-" + 后端密匙 + "-" + ReqTime)
 
-ReqTime 为请求时间戳
+    ReqTime 为请求时间戳
 
 ### <a id="code">code中台常量定义</a>
 ```go

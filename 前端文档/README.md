@@ -334,6 +334,9 @@ type WlcCheckReq struct {
 	
     Name  string `json:"name"`  // 用户姓名
     IdNum string `json:"idNum"` // 用户身份证号码
+
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    Sign    string `json:"sign"`    // 签名 详见签名规则
 }
 
 type WlcResp struct {
@@ -403,17 +406,14 @@ const (
 
 ### <a id="sign">签名规则</a>
 ```go
-SGameId: 游戏标识
 
-YZR: 101
+游戏标识: 前端密匙
 
-SGameId: 前端密匙
-
-YZR: DC6DEE092984EFA3CE7519FE08BDBAA6
+101: DC6DEE092984EFA3CE7519FE08BDBAA6 //影之刃测试密匙。正式服务器会有不同
 ```
 
-请求消息中 SGameId 字段为上述中SGameID
+请求消息中 SGameId 字段为上述中游戏标识
 
-请求消息中的 Sign 字段：
+请求消息中的 Sign 字段，通过签名规则生成：
 
-签名规则为：MD5(游戏标识 + "-" + 前端密匙)
+    签名规则为：MD5(游戏标识 + "-" + 前端密匙)
