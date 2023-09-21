@@ -11,7 +11,8 @@
 
 [支付发货](#sendgoods)
 
-[签名规则](#sign)
+### 签名
+[后端签名规则](#sign)
 
 ---
 ### <a id="login">用户登录</a>
@@ -20,7 +21,7 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 暂时直接明文传送 LoginToken => SGameId，后续会改为加密传送
 ### <a id="usertrace">用户行为上传</a> 
-路径：/WlcLoginTrace
+路径：/WlcLoginTrace[README.md]
 
 ```
 Method: POST
@@ -31,13 +32,15 @@ ContentType: application/json
 // 请求参数 LoginTraceParam 用户行为数据上报请求参数
 type WLcLoginTraceReq struct {
     Collections []*WlcLoginTrace `json:"collections"`
+    
+    SGameId string `json:"s_game_id"` // 游戏标识
+    ReqTime string `json:"req_time"`  // 请求时间(时间戳)
+    Sign    string `json:"sign"`      // 签名 详见签名规则
 }
 
 type WlcLoginTrace struct {
-    SGameId   string     `json:"s_game_Id"`  // 游戏用户标识
-    LoginTime string     `json:"login_time"` // 游戏用户登录时间
-    BT        int        `json:"bt"`         // 游戏用户行为类型 0：下线 1：上线
-    PI        string     `json:"pi"`         // 已通过实名认证用户的唯一标识 (服务器)
+    Uid int64      `json:"uid"` // 游戏用户唯一标识
+    BT  wlc.BTType `json:"bt"`  // 游戏用户行为类型 0：下线 1：上线
 }
 
 //响应参数
@@ -45,6 +48,8 @@ type WlcResp struct {
     Code int `json:"code"` //参考 code 中台常量定义
 }
 ```
+[签名规则](#sign)
+
 [code中台常量定义](#code)
 
 ## 支付
@@ -82,11 +87,14 @@ type TransactionRequest struct {
     Amount        Amount          `json:"amount"`        // 货币信息
     GameNotifyUrl string          `json:"game_notify_url"`  // 游戏回调地址
     Attach        string          `json:"attach"`     // 附加信息 服务器透传，回调时原样返回
-    SGameId       string          `json:"s_game_id"`    // 游戏用户标识
+    SGameId       string          `json:"s_game_id"`    // 游戏标识
     Type          TypeTransaction `json:"type"`       // 支付类型
     GameId        string          `json:"game_id"`  // 游戏ID 由中台分配,具体ID见签名规则
     IsSandbox     bool            `json:"is_sandbox"`   // 是否沙盒测试 仅苹果支付有效 默认为false
-    Sign          string          `json:"sign"`    // 签名 详见签名规则
+
+    Uid     int64           `json:"uid"` // 玩家唯一标识
+    Sign    string `json:"sign"`    // 签名 详见签名规则
+    ReqTime string `json:"req_time"`    // 请求时间(时间戳)
 }
 
 //下单响应
@@ -98,9 +106,9 @@ type TransactionResponse struct {
 
 //掉起支付参数
 type TransactionParam struct {
-    WeChatAppPayParam        *wechat.AppPayParams `json:"wechat_app_pay_param"`
-    AliOrderInfo             string               `json:"ali_order_info"`
-    AppleApplicationUsername string               `json:"apple_application_username"`
+    WeChatAppPayParam        *wechat.AppPayParams `json:"wechat_app_pay_param"` // 微信支付参数
+    AliOrderInfo             string               `json:"ali_order_info"`   // 支付宝支付参数
+    AppleApplicationUsername string               `json:"apple_application_username"`   // 苹果支付参数
 }
 
 //wechat.AppPayParams
@@ -115,20 +123,6 @@ type AppPayParams struct {
 }
 ```
 
-<a id="sign">签名规则</a>
-
-SGameId: 游戏用户标识
-
-YZR: 101
-
-TransactionRequest 中的 SGameId 字段为上述中SGameID
-
-TransactionRequest 中的 Sign 字段：
-
-签名规则为：MD5(游戏用户标识 + "-" + TransactionRequest.GameNotifyUrl + "-" + TransactionRequest.GameOrderId)  
-
-签名规则中TransactionRequest参数 均为下单请求中参数
-
 ### <a id="sendgoods">支付发货</a>
 
 服务器实现回调
@@ -138,28 +132,36 @@ TransactionRequest 中的 Sign 字段：
 type SendGoodsReq struct {
     OrderId string `json:"order_id"` // 游戏订单ID => TransactionRequest.GameOrderId
     Attach  string `json:"attach"`
-    Sign    string `json:"sign"`    // 签名 详见签名规则
+	
+    Sign     string `json:"sign"`   // 签名 详见签名规则
+    ReqTime  string `json:"req_time"`// 签名时间(时间戳)
 }
 
 //响应参数
-SendGoodsResp struct {
-	Code int `json:"code"`
+type SendGoodsResp struct {
+    Code int `json:"code"`
 }
 ```
 
-### <a id="sign">签名规则</a>
-
-SGameId: 游戏用户标识
+## <a id="sign">后端签名规则</a>
+```go
+SGameId: 游戏标识
 
 YZR: 101
 
+SGameId: 后端密匙
+
+YZR: A798138F62D303BFC816352120747AFC
+```
+
+
 TransactionRequest 中的 SGameId 字段为上述中SGameID
 
-TransactionRequest 中的 Sign 字段：
+请求消息中的 Sign 字段：
 
-签名规则为：MD5(游戏用户标识 + "-" + TransactionRequest.GameNotifyUrl + "-" + TransactionRequest.GameOrderId)
+签名规则为：MD5(游戏标识 + "-" + 后端密匙 + "-" + ReqTime)
 
-签名规则中TransactionRequest参数 均为下单请求中参数
+ReqTime 为请求时间戳
 
 ### <a id="code">code中台常量定义</a>
 ```go
