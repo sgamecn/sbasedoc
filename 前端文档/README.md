@@ -24,7 +24,7 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 [APPLE登录](#apple)
 
-[登录通用回复](#LoginResult)
+[登录通用回复](#loginResp)
 
 [实名认证](#realcheck)
 
@@ -73,7 +73,7 @@ type EmLoginRequest struct {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
 ### <a id="wechat">微信登录</a> 
 路径：/WechatLogin
@@ -100,7 +100,7 @@ type WechatLoginRequest struct {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
 ### <a id="TapTap">TapTap登录</a> 
 路径：/TapTapLogin 
@@ -130,7 +130,7 @@ type TTLoginRequest struct {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
 ### <a id="qq">QQ登录</a>
 路径: /QQLogin
@@ -155,7 +155,7 @@ type QQLoginRequest struct {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
 ### <a id="hero">英雄登录 </a>
 路径：/YXLogin
@@ -182,7 +182,7 @@ type YXLoginRequest struct {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
 ### <a id="third">第三方登录</a>
 对应之前的渠道登录
@@ -207,7 +207,7 @@ type ThirdLoginRequest struct {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
 ### <a id="apple">APPLE登录</a> 
 路径：/AppleLogin
@@ -233,7 +233,7 @@ type AppleLoginRequest struct {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
 ### <a id="SendMobileMessage">发短信验证码</a> 
 路径：/SendMobileMessage
@@ -292,9 +292,9 @@ type MobileLoginRequest struct {
 }
 ```
 
-[通用登录回复](#LoginResult)
+[通用登录回复](#loginResp)
 
-### <a id="LoginResult">通用登录回复</a>
+### <a id="loginResp">通用登录回复</a>
 ```go
 type LoginResult struct {
 Code int `json:"code"`
