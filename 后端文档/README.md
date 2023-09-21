@@ -7,7 +7,7 @@
 
 [用户行为上传](#usertrace)
 
-[防沉迷相关文档](#WLC)
+[防沉迷相关文档](#wlc)
 ### 支付
 [支付下单](#transaction)
 
@@ -54,7 +54,7 @@ type WlcResp struct {
 
 [code中台常量定义](#code)
 
-#### <a id="WLC">防沉迷相关文档</a>
+#### <a id="wlc">防沉迷相关文档</a>
 
 [接口对接技术规范.pdf](../WLC/接口对接技术规范.pdf)
 
