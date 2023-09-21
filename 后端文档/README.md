@@ -6,6 +6,8 @@
 [用户登录](#login)
 
 [用户行为上传](#usertrace)
+
+[防沉迷相关文档](#WLC)
 ### 支付
 [支付下单](#transaction)
 
@@ -51,6 +53,12 @@ type WlcResp struct {
 [签名规则](#sign)
 
 [code中台常量定义](#code)
+
+#### <a id="WLC">防沉迷相关文档</a>
+
+[接口对接技术规范.pdf](../WLC/接口对接技术规范.pdf)
+
+[网络游戏防沉迷实名认证系统.pdf](../WLC/网络游戏防沉迷实名认证系统.pdf)
 
 ## 支付
 PF常用支付流程图
@@ -122,6 +130,9 @@ type AppPayParams struct {
     Sign      string `json:"sign"`
 }
 ```
+[签名规则](#sign)
+
+[code中台常量定义](#code)
 
 ### <a id="sendgoods">支付发货</a>
 
@@ -142,6 +153,9 @@ type SendGoodsResp struct {
     Code int `json:"code"`
 }
 ```
+[签名规则](#sign)
+
+[code中台常量定义](#code)
 
 ## <a id="sign">后端签名规则</a>
 ```go
