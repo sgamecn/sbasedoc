@@ -65,6 +65,7 @@ PF常用支付流程图
 ![支付流程图](../image/pay.png)
 
 ### <a id="transaction">支付下单</a>
+路径：/Transaction
 
 ```
 Method: POST
@@ -168,8 +169,7 @@ SGameId: 后端密匙
 YZR: A798138F62D303BFC816352120747AFC
 ```
 
-
-TransactionRequest 中的 SGameId 字段为上述中SGameID
+请求消息中 SGameId 字段为上述中SGameID
 
 请求消息中的 Sign 字段：
 

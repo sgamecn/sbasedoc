@@ -38,6 +38,14 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 [apple支付](#applepay)
 
+## 签名规则
+
+[签名规则](#sign)
+
+## Code中台常量定义
+
+[code中台常量定义](#code)
+
 ---
 ### <a id="EM">EM登录</a>
 
@@ -50,11 +58,21 @@ ContentType: application/json
 请求参数
 ```go
 type EmLoginRequest struct {
-	// em参数
-	E string `json:"e"`
-	M string `json:"m"`
+    Namespace int `json:"namespace"`    //预留，可不填
+    
+    // em参数
+    E string `json:"e"`
+    M string `json:"m"`
+    
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    
+    Sign string `json:"sign"`   // 签名 详见签名规则
 }
+
+// 响应参数 见通用登录回复
 ```
+[签名规则](#sign)
+
 [通用登录回复](#LoginResult)
 
 ### <a id="wechat">微信登录</a> 
@@ -70,10 +88,17 @@ ContentType: application/json
 请求参数
 ```go
 type WechatLoginRequest struct {
-	Namespace int `json:"namespace"` //预留，可不填
-	Code string `json:"code"` //授权临时票据（code）
+    Namespace int `json:"namespace"`    //预留，可不填
+    
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    Sign    string `json:"sign"`    // 签名 详见签名规则
+    
+    Code string `json:"code"`   // 微信登录返回的code
 }
+
+// 响应参数 见通用登录回复
 ```
+[签名规则](#sign)
 
 [通用登录回复](#LoginResult)
 
@@ -81,6 +106,8 @@ type WechatLoginRequest struct {
 路径：/TapTapLogin 
 
 [TapTap官方接入文档](https://developer.taptap.cn/docs/sdk/taptap-login/guide/start/)
+
+[签名规则](#sign)
 
 ```
 Method: POST
@@ -92,10 +119,17 @@ ContentType: application/json
 type TTLoginRequest struct {
     Namespace int `json:"namespace"` //预留，可不填
 
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    Sign    string `json:"sign"`    // 签名 详见签名规则
+
     AccessToken string `json:"accessToken"` //登录成功后 TapSDK 返回的 access_token
     MacKey      string `json:"macKey"` //登录成功后 TapSDK 返回的 mac_key
 }
+
+// 响应参数 见通用登录回复
 ```
+[签名规则](#sign)
+
 [通用登录回复](#LoginResult)
 
 ### <a id="qq">QQ登录</a>
@@ -111,9 +145,16 @@ ContentType: application/json
 type QQLoginRequest struct {
     Namespace int `json:"namespace"` //预留，可不填
 
-    AccessToken string `json:"access_token"` 
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    Sign    string `json:"sign"`        // 签名 详见签名规则
+
+    AccessToken string `json:"access_token"`    //登录成功后 QQSDK 返回的 access_token
 }
+
+// 响应参数 见通用登录回复
 ```
+[签名规则](#sign)
+
 [通用登录回复](#LoginResult)
 
 ### <a id="hero">英雄登录 </a>
@@ -130,10 +171,17 @@ ContentType: application/json
 type YXLoginRequest struct {
     Namespace int `json:"namespace"` //预留，可不填
 
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    Sign    string `json:"sign"`    // 签名 详见签名规则
+
     Account string `json:"account"` 
     Passwd  string `json:"passwd"`
 }
+
+// 响应参数 见通用登录回复
 ```
+[签名规则](#sign)
+
 [通用登录回复](#LoginResult)
 
 ### <a id="third">第三方登录</a>
@@ -151,9 +199,14 @@ ContentType: application/json
 type ThirdLoginRequest struct {
     Namespace int `json:"namespace"` //预留，可不填
 
-    Cuid string `json:"cuid"`
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    Sign    string `json:"sign"`    // 签名 详见签名规则
+
+    CUid string `json:"c_uid"`  //渠道用户ID
 }
 ```
+[签名规则](#sign)
+
 [通用登录回复](#LoginResult)
 
 ### <a id="apple">APPLE登录</a> 
@@ -170,9 +223,15 @@ ContentType: application/json
 type AppleLoginRequest struct {
     Namespace int `json:"namespace"` //预留，可不填 
 
-    Code string `json:"code"`
+    SGameId string `json:"s_game_id"`   // 游戏标识
+    Sign    string `json:"sign"`      // 签名 详见签名规则
+
+    Code string `json:"code"`   // 苹果登录返回的code
 }
+
+// 响应参数 见通用登录回复
 ```
+[签名规则](#sign)
 
 [通用登录回复](#LoginResult)
 
@@ -192,8 +251,6 @@ type SendMobileMessageRequest struct {
     SendType  string `json:"send_type"` //发送类型 1绑定 2登录
 }
 ```
-
-[code中台常量定义](#code)
 
 ### <a id="BindMobile">渠道用户绑定手机</a> 
 路径：/BindMobile
@@ -235,10 +292,9 @@ type MobileLoginRequest struct {
 }
 ```
 
-[code中台常量定义](#code)
-
 [通用登录回复](#LoginResult)
 
+### <a id="LoginResult">通用登录回复</a>
 ```go
 type LoginResult struct {
 Code int `json:"code"`
@@ -255,11 +311,12 @@ Code int `json:"code"`
     Token string `json:"token"`
     Key   string `json:"key"`
 
-    IsWlc bool `json:"is_wlc"` //是否实名认证 如果没有实名认证 需要跳转到实名认证页面
+    WlcStatus    int64 `json:"wlc_status"`  // 0 认证成功 1认证中 2 认证失败
+    UserBirthday int64 `json:"user_birthday"`   // 用户生日
 }
 ```
 
-#### <a id="realcheck">实名认证</a>   
+### <a id="realcheck">实名认证</a>   
 路径：/WlcCheck
 
 ```
@@ -311,7 +368,7 @@ type ApplePayVerifyIdTokenV1 struct {
 
 type ApplePayVerifyIdTokenV1Rsp struct {
     Code int `json:"code"` //参考 code中台常量定义 
-    SuccessTransactionList []string `json:"success_transaction_list"`  
+    SuccessTransactionList []string `json:"success_transaction_list"`   // 成功的transaction_id
 }
 ```
 ApplePayVerifyIdTokenV1Rsp 参数 SuccessTransactionList 为成功的[transaction_id](https://developer.apple.com/documentation/appstorereceipts/responsebody/latest_receipt_info)
@@ -343,3 +400,20 @@ const (
     CODE_SERVER_ERROR      = 500 //APPLE服务器错误
 )
 ```
+
+### <a id="sign">签名规则</a>
+```go
+SGameId: 游戏标识
+
+YZR: 101
+
+SGameId: 前端密匙
+
+YZR: DC6DEE092984EFA3CE7519FE08BDBAA6
+```
+
+请求消息中 SGameId 字段为上述中SGameID
+
+请求消息中的 Sign 字段：
+
+签名规则为：MD5(游戏标识 + "-" + 前端密匙)
