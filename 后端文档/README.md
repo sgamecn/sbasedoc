@@ -194,6 +194,8 @@ const (
     WLC_QUERY_ERROR        = 167 //wlc查询失败
     SIGN_ERROR             = 168 //签名错误
     SGAME_ID_NOT_EXIST     = 169 //sgame_id不存在
+    CODE_LOGIN_TYP_ERROR   = 170 //未开放对应登录方式
+    CODE_PAY_TYP_ERROR     = 171 //未开放对应支付方式
     CODE_NOT_FOUND         = 404 //APPLE资源不存在
     CODE_SERVER_ERROR      = 500 //APPLE服务器错误
 )
