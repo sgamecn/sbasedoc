@@ -76,9 +76,10 @@ ContentType: application/json
 
 //支付类型
 const (
-    TA_WECHAT TypeTransaction = "WX" // 微信
-    TA_ALI    TypeTransaction = "AL" // 支付宝
-    TA_APPLE  TypeTransaction = "AP" // 苹果
+    TA_WECHAT_APP    TypeTransaction = "WX_APP"    // 微信APP
+    TA_WECHAT_NATIVE TypeTransaction = "WX_NATIVE" // 微信NATIVE
+    TA_ALI           TypeTransaction = "ALI"       // 支付宝
+    TA_APPLE         TypeTransaction = "AP"        // 苹果
 )
 
 type TypeTransaction string
