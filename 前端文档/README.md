@@ -46,6 +46,9 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 [code中台常量定义](#code)
 
+### 防沉迷
+[防沉迷详细规则](#chenmi)
+
 ---
 ### <a id="EM">EM登录</a>
 
@@ -352,6 +355,7 @@ type WlcCheckReq struct {
 WlcCheckResp struct {
     Status  int  `json:"status"` // 0 认证成功 1认证中 2 认证失败
 	wlcIndulgeInfo WlcIndulgeInfo `json:"wlc_indulge_info"`
+	CanPlay bool `json:"can_play"`  // 是否可以游戏
 }
 
 //WlcIndulgeInfo 防沉迷信息
@@ -364,6 +368,14 @@ WlcIndulgeInfo struct {
 }
 ```
 [code中台常量定义](#code)
+
+### <a id="chenmi">防沉迷详细规则</a>
+
+a.游戏时长限制，未成年用户仅可在周五、周六、周日和法定节假日的20时至21时进行游戏，并在21点整点强制下线；
+
+b.游戏消费限制，未满12周岁的用户无法进行游戏充值；12周岁（含）以上未满16周岁的用户，单次充值上限50元人民币，每月充值上限200元人民币；16周岁（含）以上未成年用户，单次充值上限100元人民币，每月充值上限400元人民币。
+
+中台登录时会进行判定判定时候可以登录 9点强制踢 前端自行实现
 
 ## 支付
 
@@ -401,28 +413,31 @@ ApplePayVerifyIdTokenV1Rsp 参数 SuccessTransactionList 为成功的[transactio
 ### <a id="code">code中台常量定义</a>
 ```go
 const (
-    CODE_SUCCESS           = 200 //成功
-    CODE_PARAM_MISS        = 116 //参数缺失
-    CODE_SERVICE_BUSY      = 126 //服务器繁忙（内部逻辑错误）
-    CODE_TOKEN_EXPIRED     = 128 //令牌已过期
-    CODE_INVALID_NAMESPACE = 157 //无效的Namespace
-    CODE_PASSWORD_ERROR    = 158 //密码错误
-    CODE_ACCOUNT_NOT_EXIST = 159 //账号不存在
-    CODE_SEND_SMS_TOO_FAST = 160 //发送短信过快
-    CODE_VALIDATE_CODE_ERR = 161 //验证码错误
-    CODE_PAYCALLBACK_ERROR = 162 //支付回调错误
-    CODE_MOBILE_EXIST      = 163 //手机账号已存在
-    BAN_SANDBOX            = 164 //禁止沙盒测试
-    WLC_ACCOUNT_NOT_EXIST  = 165 //账号不存在
-    WLC_TRACE_ERROR        = 166 //wlc上报失败
-    WLC_CHECH_ERROR        = 166 //wlc校验失败
-    WLC_QUERY_ERROR        = 167 //wlc查询失败
-    SIGN_ERROR             = 168 //签名错误
-    SGAME_ID_NOT_EXIST     = 169 //sgame_id不存在
-    CODE_LOGIN_TYP_ERROR   = 170 //未开放对应登录方式
-    CODE_PAY_TYP_ERROR     = 171 //未开放对应支付方式
-    CODE_NOT_FOUND         = 404 //APPLE资源不存在
-    CODE_SERVER_ERROR      = 500 //APPLE服务器错误
+    CODE_SUCCESS            = 200 //成功
+    CODE_PARAM_MISS         = 116 //参数缺失
+    CODE_SERVICE_BUSY       = 126 //服务器繁忙（内部逻辑错误）
+    CODE_TOKEN_EXPIRED      = 128 //令牌已过期
+    CODE_INVALID_NAMESPACE  = 157 //无效的Namespace
+    CODE_PASSWORD_ERROR     = 158 //密码错误
+    CODE_ACCOUNT_NOT_EXIST  = 159 //账号不存在
+    CODE_SEND_SMS_TOO_FAST  = 160 //发送短信过快
+    CODE_VALIDATE_CODE_ERR  = 161 //验证码错误
+    CODE_PAYCALLBACK_ERROR  = 162 //支付回调错误
+    CODE_MOBILE_EXIST       = 163 //手机账号已存在
+    BAN_SANDBOX             = 164 //禁止沙盒测试
+    WLC_ACCOUNT_NOT_EXIST   = 165 //账号不存在
+    WLC_TRACE_ERROR         = 166 //wlc上报失败
+    WLC_CHECH_ERROR         = 166 //wlc校验失败
+    WLC_QUERY_ERROR         = 167 //wlc查询失败
+    SIGN_ERROR              = 168 //签名错误
+    SGAME_ID_NOT_EXIST      = 169 //sgame_id不存在
+    CODE_LOGIN_TYP_ERROR    = 170 //未开放对应登录方式
+    CODE_PAY_TYP_ERROR      = 171 //未开放对应支付方式
+    CODE_IS_NOT_ADULT_LIMIT = 172 //未成年人限制
+    CODE_NOT_FOUND          = 404 //APPLE资源不存在
+    CODE_SERVER_ERROR       = 500 //APPLE服务器错误
+    RECHARGE_SINGLE_LIMIT   = 173 //充值单笔限额
+    RECHARGE_ACCUMULATE     = 174 //充值累计限额
 )
 ```
 
