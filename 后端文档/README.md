@@ -46,8 +46,8 @@ type WlcLoginTrace struct {
 }
 
 //响应参数
-type WlcResp struct {
-    Code int `json:"code"` //参考 code 中台常量定义
+WlcLoginTraceResp struct {
+    Code int `json:"code"`
 }
 ```
 [签名规则](#sign)
@@ -99,7 +99,6 @@ type TransactionRequest struct {
     Attach        string          `json:"attach"`     // 附加信息 服务器透传，回调时原样返回
     SGameId       string          `json:"s_game_id"`    // 游戏标识
     Type          TypeTransaction `json:"type"`       // 支付类型
-    GameId        string          `json:"game_id"`  // 游戏ID 由中台分配,具体ID见签名规则
     IsSandbox     bool            `json:"is_sandbox"`   // 是否沙盒测试 仅苹果支付有效 默认为false
 
     Uid     int64           `json:"uid"` // 玩家唯一标识

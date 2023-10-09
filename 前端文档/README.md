@@ -312,8 +312,18 @@ Code int `json:"code"`
     Key   string `json:"key"`
 
     WlcStatus    int64 `json:"wlc_status"`  // 0 认证成功 1认证中 2 认证失败
-    UserBirthday int64 `json:"user_birthday"`   // 用户生日
+    WlcIndulgeInfo WlcIndulgeInfo `json:"wlc_indulge_info"`
 }
+
+//WlcIndulgeInfo 防沉迷信息
+WlcIndulgeInfo struct {
+    IsAdult      bool  `json:"is_adult"`    // 是否成年
+    UserBirthday int64 `json:"user_birthday"`   // 用户生日
+    
+    SingleRechargeMax     int64 `json:"single_recharge_max"`    // 单笔充值最大金额 -1 无限制
+    AccumulateRechargeMax int64 `json:"accumulate_recharge_max"`    // 累计充值最大金额     -1 无限制  
+}
+
 ```
 
 ### <a id="realcheck">实名认证</a>   
@@ -339,8 +349,18 @@ type WlcCheckReq struct {
     Sign    string `json:"sign"`    // 签名 详见签名规则
 }
 
-type WlcResp struct {
-    Code int `json:"code"` //参考 code中台常量定义
+WlcCheckResp struct {
+    Status  int  `json:"status"` // 0 认证成功 1认证中 2 认证失败
+	wlcIndulgeInfo WlcIndulgeInfo `json:"wlc_indulge_info"`
+}
+
+//WlcIndulgeInfo 防沉迷信息
+WlcIndulgeInfo struct {
+    IsAdult      bool  `json:"is_adult"`    // 是否成年
+    UserBirthday int64 `json:"user_birthday"`   // 用户生日
+    
+    SingleRechargeMax     int64 `json:"single_recharge_max"`    // 单笔充值最大金额 -1 无限制
+    AccumulateRechargeMax int64 `json:"accumulate_recharge_max"`    // 累计充值最大金额     -1 无限制  
 }
 ```
 [code中台常量定义](#code)
