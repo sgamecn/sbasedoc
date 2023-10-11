@@ -36,6 +36,8 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 ## 支付
 
+[支付下单](#transaction)
+
 [apple支付](#applepay)
 
 ## 签名规则
@@ -379,11 +381,88 @@ b.游戏消费限制，未满12周岁的用户无法进行游戏充值；12周�
 
 ## 支付
 
-apple支付需要特殊处理
+### 通常支付
+![支付流程图](../image/Pay.png)
+### <a id="transaction">支付下单（获取支付参数）</a>
+路径：/Transaction
+
+```
+Method: POST
+ContentType: application/json
+```
+
+```go
+
+//支付类型
+const (
+    TA_WECHAT_APP    TypeTransaction = "WX_APP"    // 微信APP
+    TA_WECHAT_NATIVE TypeTransaction = "WX_NATIVE" // 微信NATIVE
+    TA_ALI           TypeTransaction = "ALI"       // 支付宝
+    TA_APPLE         TypeTransaction = "AP"        // 苹果
+)
+
+type TypeTransaction string
+
+//货币信息
+type Amount struct {
+    Total    float64 `json:"total"`   // 总金额
+    Currency string  `json:"currency"`  // 货币类型 可不填，不填情况下默认为 CNY：人民币
+}
+
+//下单请求
+type TransactionRequest struct {
+    GameOrderId   string          `json:"game_order_id"`  // 游戏订单ID
+    Desc          string          `json:"description"`      // 订单描述
+    Amount        Amount          `json:"amount"`        // 货币信息
+    GameNotifyUrl string          `json:"game_notify_url"`  // 游戏回调地址
+    Attach        string          `json:"attach"`     // 附加信息 服务器透传，回调时原样返回
+    SGameId       string          `json:"s_game_id"`    // 游戏标识
+    Type          TypeTransaction `json:"type"`       // 支付类型
+    IsSandbox     bool            `json:"is_sandbox"`   // 是否沙盒测试 仅苹果支付有效 默认为false
+
+    // em参数
+    E string `json:"e"`
+    M string `json:"m"`
+	
+    Sign    string `json:"sign"`    // 签名 详见签名规则
+    ReqTime string `json:"req_time"`    // 请求时间(时间戳)
+}
+
+//下单响应
+type TransactionResponse struct {
+    Code  int              `json:"code"`
+    Type  TypeTransaction  `json:"type"`
+    Param TransactionParam `json:"param"`   // 支付参数
+}
+
+type TransactionParam struct {
+    WeChatAppPayParam        *wechat.AppPayParams `json:"wechat_app_pay_param"` // 微信APP支付参数
+    WeChatNativePay          string               `json:"wechat_native_pay"`    // 微信NATIVE支付参数
+    AliAppOrderInfo          string               `json:"ali_app_order_info"`   // 支付宝APP支付参数
+    AliWebOrderInfo          string               `json:"ali_web_order_info"`   // 支付宝WEB支付参数
+    AppleApplicationUsername string               `json:"apple_application_username"`   // 苹果支付applicationUsername 即为游戏订单ID
+}
+
+//wechat.AppPayParams
+type AppPayParams struct {
+    Appid     string `json:"appid"`  
+    Partnerid string `json:"partnerid"`
+    Prepayid  string `json:"prepayid"`
+    Package   string `json:"package"`
+    Noncestr  string `json:"noncestr"`
+    Timestamp string `json:"timestamp"`
+    Sign      string `json:"sign"`
+}
+```
+
+[签名规则](#sign)
+
+[通用登录回复](#loginResp)
+
+### <a id="applepay">apple支付</a>
+![支付流程图](../image/ApplePay.png)
 
 [apple支付接入文档](https://developer.apple.com/documentation/passkit/apple_pay/offering_apple_pay_in_your_app)
-
-![支付流程图](../image/ApplePay.png)
 
 接入appleSDK 进行下单时，请设置applicationUsername 为游戏服务器回传订单号
 
@@ -391,7 +470,7 @@ apple支付需要特殊处理
 
 对接中台方面，前端只处理第6步骤：支付回调上报，详情如图
 
-#### <a id="applepay">苹果支付回调</a>
+#### 苹果支付回调
 路径：/AppleVerifyIdTokenV1
 ```go
 // 苹果支付回调

@@ -9,8 +9,6 @@
 
 [防沉迷相关文档](#wlc)
 ### 支付
-[支付下单](#transaction)
-
 [支付发货](#sendgoods)
 
 ### 签名
@@ -65,78 +63,10 @@ WlcLoginTraceResp struct {
 
 ## 支付
 PF常用支付流程图
-![支付流程图](../image/pay.png)
+![支付流程图](../image/Pay.png)
 
-### <a id="transaction">支付下单</a>
-路径：/Transaction
-
-```
-Method: POST
-ContentType: application/json
-```
-
-```go
-
-//支付类型
-const (
-    TA_WECHAT_APP    TypeTransaction = "WX_APP"    // 微信APP
-    TA_WECHAT_NATIVE TypeTransaction = "WX_NATIVE" // 微信NATIVE
-    TA_ALI           TypeTransaction = "ALI"       // 支付宝
-    TA_APPLE         TypeTransaction = "AP"        // 苹果
-)
-
-type TypeTransaction string
-
-//货币信息
-type Amount struct {
-    Total    float64 `json:"total"`   // 总金额
-    Currency string  `json:"currency"`  // 货币类型 可不填，不填情况下默认为 CNY：人民币
-}
-
-//下单请求
-type TransactionRequest struct {
-    GameOrderId   string          `json:"game_order_id"`  // 游戏订单ID
-    Desc          string          `json:"description"`      // 订单描述
-    Amount        Amount          `json:"amount"`        // 货币信息
-    GameNotifyUrl string          `json:"game_notify_url"`  // 游戏回调地址
-    Attach        string          `json:"attach"`     // 附加信息 服务器透传，回调时原样返回
-    SGameId       string          `json:"s_game_id"`    // 游戏标识
-    Type          TypeTransaction `json:"type"`       // 支付类型
-    IsSandbox     bool            `json:"is_sandbox"`   // 是否沙盒测试 仅苹果支付有效 默认为false
-
-    Uid     int64           `json:"uid"` // 玩家唯一标识
-    Sign    string `json:"sign"`    // 签名 详见签名规则
-    ReqTime string `json:"req_time"`    // 请求时间(时间戳)
-}
-
-//下单响应
-type TransactionResponse struct {
-    Code  int              `json:"code"`
-    Type  TypeTransaction  `json:"type"`
-    Param TransactionParam `json:"param"`
-}
-
-//掉起支付参数
-type TransactionParam struct {
-    WeChatAppPayParam        *wechat.AppPayParams `json:"wechat_app_pay_param"` // 微信支付参数
-    AliOrderInfo             string               `json:"ali_order_info"`   // 支付宝支付参数
-    AppleApplicationUsername string               `json:"apple_application_username"`   // 苹果支付参数
-}
-
-//wechat.AppPayParams
-type AppPayParams struct {
-    Appid     string `json:"appid"`  
-    Partnerid string `json:"partnerid"`
-    Prepayid  string `json:"prepayid"`
-    Package   string `json:"package"`
-    Noncestr  string `json:"noncestr"`
-    Timestamp string `json:"timestamp"`
-    Sign      string `json:"sign"`
-}
-```
-[签名规则](#sign)
-
-[code中台常量定义](#code)
+Apple支付流程图
+![支付流程图](../image/ApplePay.png)
 
 ### <a id="sendgoods">支付发货</a>
 
