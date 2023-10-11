@@ -63,7 +63,7 @@ WlcLoginTraceResp struct {
 
 ## 支付
 PF常用支付流程图
-![支付流程图](../image/Pay.png)
+![支付流程图](../image/pay.png)
 
 Apple支付流程图
 ![支付流程图](../image/ApplePay.png)
