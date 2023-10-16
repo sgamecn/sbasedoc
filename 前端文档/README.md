@@ -24,7 +24,7 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 [APPLE登录](#apple)
 
-[登录通用回复](#loginResp)
+[登录通用回复](#loginresp)
 
 [实名认证](#realcheck)
 
@@ -78,7 +78,7 @@ message EmLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="wechat">微信登录</a> 
 路径：/WechatLogin
@@ -106,7 +106,7 @@ message WechatLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="TapTap">TapTap登录</a> 
 路径：/TapTapLogin 
@@ -137,7 +137,7 @@ message TTLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="qq">QQ登录</a>
 路径: /QQLogin
@@ -164,7 +164,7 @@ message QQLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="hero">英雄登录 </a>
 路径：/YXLogin
@@ -193,7 +193,7 @@ message YXLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="third">第三方登录</a>
 对应之前的渠道登录
@@ -222,7 +222,7 @@ message ThirdLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="apple">APPLE登录</a> 
 路径：/AppleLogin
@@ -250,7 +250,7 @@ message AppleLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="SendMobileMessage">发短信验证码</a> 
 路径：/SendMobileMessage
@@ -308,7 +308,7 @@ message BindMobileResponse {
 
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="MobileLogin">手机号登录</a> 
 路径：/MobileLogin
@@ -333,9 +333,9 @@ message MobileLoginRequest {
 ```
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
-### <a id="loginResp">通用登录回复</a>
+### <a id="loginresp">通用登录回复</a>
 ```protobuf
 syntax = "proto3";
 
@@ -472,7 +472,7 @@ type AppPayParams struct {
 
 [签名规则](#sign)
 
-[通用登录回复](#loginResp)
+[通用登录回复](#loginresp)
 
 ### <a id="applepay">apple支付</a>
 ![支付流程图](../image/ApplePay.png)
