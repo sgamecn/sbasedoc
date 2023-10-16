@@ -78,6 +78,8 @@ Apple支付流程图
 
 ### <a id="paytransaction">支付下单</a>
 
+2步骤中的参数由服务器生成，前端进行透传
+
 ```protobuf
 syntax = "proto3";
 
