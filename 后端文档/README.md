@@ -9,6 +9,8 @@
 
 [防沉迷相关文档](#wlc)
 ### 支付
+[支付下单](#paytransaction)
+
 [支付发货](#sendgoods)
 
 ### 签名
@@ -74,7 +76,7 @@ PF常用支付流程图
 Apple支付流程图
 ![支付流程图](../image/ApplePay.png)
 
-### <a id="sendgoods">支付下单</a>
+### <a id="paytransaction">支付下单</a>
 
 ```protobuf
 syntax = "proto3";
