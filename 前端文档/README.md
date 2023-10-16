@@ -71,7 +71,7 @@ message EmLoginRequest {
     string M = 3;
     
     string SGameId = 4; // 游戏ID
-    string Sign = 5;  // 签名
+    string Sign = 5;  // 签名 详见签名规则
 }
 
 // 响应参数 见通用登录回复
@@ -97,7 +97,7 @@ message WechatLoginRequest {
   int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名
+  string Sign = 3;  // 签名 详见签名规则
 
   string Code = 4; // 微信返回的code
 }
@@ -127,7 +127,7 @@ message TTLoginRequest {
   int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名
+  string Sign = 3;  // 签名 详见签名规则
 
   string AccessToken = 4; // TapTap返回的access_token
   string MacKey = 5;  // TapTap返回的mac_key
@@ -155,7 +155,7 @@ message QQLoginRequest {
   int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名
+  string Sign = 3;  // 签名 详见签名规则
 
   string AccessToken = 4; // QQ返回的access_token
 }
@@ -183,7 +183,7 @@ message YXLoginRequest {
   int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名
+  string Sign = 3;  // 签名 详见签名规则
 
   string Account = 4; // 英雄账号
   string Passwd = 5;  // 英雄密码
@@ -213,7 +213,7 @@ message ThirdLoginRequest {
   int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名
+  string Sign = 3;  // 签名 详见签名规则
 
   string ChannelId = 4; // 渠道ID
   string CUid = 5;  // 渠道UID
@@ -241,7 +241,7 @@ message AppleLoginRequest {
   int64 Namespace = 1;
   
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名
+  string Sign = 3;  // 签名 详见签名规则
   
   string Code = 4;  // 苹果返回的code
 }
@@ -265,7 +265,7 @@ syntax = "proto3";
 
 message SendMobileMessageRequest {
   string SGameId = 1;
-  string Sign = 2;
+  string Sign = 2;  // 签名 详见签名规则
   int64 Namespace = 3;
   string Mobile = 4; //手机号
   string SendType = 5; //发送类型 1绑定 2登录
@@ -292,7 +292,7 @@ syntax = "proto3";
 
 message BindMobileRequest {
   string SGameId  = 1;
-  string Sign = 2;
+  string Sign = 2;  // 签名 详见签名规则
   int64 Namespace  = 3;
   string Mobile = 4;  //手机号
   string DeviceNo = 5;  //设备号
@@ -324,7 +324,7 @@ syntax = "proto3";
 
 message MobileLoginRequest {
   string SGameId = 1;
-  string Sign = 2;
+  string Sign = 2;  // 签名 详见签名规则
   int64  Namespace = 3;
   string Mobile = 4;
   string DeviceNo = 5;
@@ -392,7 +392,7 @@ message WlcCheckReq {
   string IdNum = 4;
 
   string SGameId = 5; // 游戏ID
-  string Sign = 6;  // 签名
+  string Sign = 6;  // 签名 详见签名规则
 }
 
 //Wlc上报(实名认证)回复 SBase->Client
@@ -437,23 +437,9 @@ ContentType: application/json
 ```protobuf
 syntax = "proto3";
 
-//支付类型
-enum TAType {
-  TA_WECHAT_APP = 0;   // 微信APP
-  TA_WECHAT_NATIVE  = 1; // 微信NATIVE
-  TA_ALI  = 2;     // 支付宝
-  TA_APPLE = 3;        // 苹果
-}
-
-//货币信息
-message Amount {
-  double Total = 1; // 总金额
-  string Currency = 2;  // 货币类型 例如：CNY
-}
-
 //下单请求 Server->Client->SBase 服务器加工消息，客户端不用关心
 message TransactionRequestEncode {
-  string encodeStr = 1;
+  string encodeStr = 1; // 透传参数 由服务器加工
 }
 
 //下单请求回复 Client->SBase

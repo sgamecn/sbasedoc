@@ -39,7 +39,7 @@ message WLcLoginTraceReq {
 
   string SGameId = 2; // 游戏标识
   string ReqTime = 3; // 请求时间戳
-  string Sign = 4;  // 签名
+  string Sign = 4;  // 签名 详见签名规则
 }
 
 enum BTType {
@@ -74,6 +74,56 @@ PF常用支付流程图
 Apple支付流程图
 ![支付流程图](../image/ApplePay.png)
 
+### <a id="sendgoods">支付下单</a>
+
+```protobuf
+syntax = "proto3";
+
+//下单请求具体参数
+message TransactionRequest {
+  string GameOrderId = 1;
+  string Desc = 2;
+  Amount Amount = 3;
+  string GameNotifyUrl = 4;
+  string Attach = 5;
+  string SGameId = 6;
+  TAType Type = 7;
+  bool IsSandbox = 8;
+
+  // em参数
+  string E = 9;
+  string M = 10;
+
+  //Uid     int64  `json:"uid"`
+  string Sign = 11; // 签名 详见签名规则
+  string ReqTime = 12;
+}
+
+//下单
+enum TAType {
+  TA_WECHAT_APP = 0;   // 微信APP
+  TA_WECHAT_NATIVE  = 1; // 微信NATIVE
+  TA_ALI  = 2;     // 支付宝
+  TA_APPLE = 3;        // 苹果
+}
+
+// 货币信息
+message Amount {
+  double Total = 1;
+  string Currency = 2;
+}
+```
+
+请加工下单信息给前端进行转发
+
+TransactionRequest proto.encode之后为 下单信息
+
+最终透传字符串为：md5加密(base64加密(下单信息)+后端密匙)+下单信息  
+
+后端密匙见签名规则
+
+[签名规则](#sign)
+
 ### <a id="sendgoods">支付发货</a>
 
 服务器实现回调
@@ -86,7 +136,7 @@ message SendGoodsReq {
   string OrderId = 1; // 订单ID
   string Attach = 2;  // 透传参数
 
-  string Sign = 3;  // 签名
+  string Sign = 3;  // 签名 详见签名规则
   string ReqTime = 4; // 请求时间
 }
 
