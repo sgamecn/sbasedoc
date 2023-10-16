@@ -44,7 +44,6 @@ message EmLoginRequest {
   string M = 3;
 
   string SGameId = 4; // 游戏ID
-
   string Sign = 5;  // 签名
 }
 
@@ -55,7 +54,7 @@ message WechatLoginRequest {
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
-  string Code = 4;
+  string Code = 4; // 微信返回的code
 }
 
 //TapTap登录
@@ -65,8 +64,8 @@ message TTLoginRequest {
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
-  string AccessToken = 4;
-  string MacKey = 5;
+  string AccessToken = 4; // TapTap返回的access_token
+  string MacKey = 5;  // TapTap返回的mac_key
 }
 
 //英雄登录
@@ -98,7 +97,7 @@ message QQLoginRequest {
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
-  string AccessToken = 4;
+  string AccessToken = 4; // QQ返回的access_token
 }
 
 //Apple登录
@@ -108,7 +107,7 @@ message AppleLoginRequest {
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
-  string Code = 4;
+  string Code = 4;  // 苹果返回的code
 }
 
 //手机号码登录
@@ -121,35 +120,35 @@ message MobileLoginRequest {
   string ValidateCode   = 6;
 }
 
-//手机号码注册
-message LoginResult {
-    Code Code = 1;
-
-    // em参数
-    string E = 2;
-    string M = 3;
-
-    int64 Uid = 4;
-    string DisplayName = 5;
-
-    string PFType = 6;
-    string PFID = 7;
-
-    string Token = 8;
-    string Key = 9;
-
-    int64 WlcStatus = 10;
-
-    WlcIndulgeInfo WlcIndulgeInfo = 11;
-}
-
 //WlcIndulgeInfo 防沉迷信息
 message WlcIndulgeInfo {
-  bool IsAdult = 1;
-  int64 UserBirthday = 2;
+  bool IsAdult = 1; // 是否成年
+  int64 UserBirthday = 2; // 用户生日
 
-  int64 SingleRechargeMax = 3;
-  int64 AccumulateRechargeMax = 4;
+  int64 SingleRechargeMax = 3;  // 单笔充值最大金额 -1 无限制
+  int64 AccumulateRechargeMax = 4;  // 累计充值最大金额 -1 无限制
+}
+
+// 登录回复
+message LoginResult {
+  Code Code = 1;  //参考 code中台常量定义
+
+  // em参数
+  string E = 2;
+  string M = 3;
+
+  int64 Uid = 4;
+  string DisplayName = 5;
+
+  string PFType = 6;
+  string PFID = 7;
+
+  string Token = 8;
+  string Key = 9;
+
+  int64 WlcStatus = 10;
+
+  WlcIndulgeInfo WlcIndulgeInfo = 11;
 }
 
 //发送短信校验码接口
@@ -261,6 +260,19 @@ message ApplePayVerifyIdTokenV1 {
 message AppleVerifyIdTokenResponse {
   Code Code = 1;
   repeated string SuccessTransactionList = 2;   // 成功的订单列表
+}
+
+//发货
+message SendGoodsReq {
+  string OrderId = 1; // 订单ID
+  string Attach = 2;  // 透传参数
+
+  string Sign = 3;  // 签名
+  string ReqTime = 4; // 请求时间
+}
+
+message SendGoodsResp {
+  Code  Code = 1;
 }
 
 //Wlc
