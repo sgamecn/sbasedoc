@@ -10,7 +10,7 @@
 EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ.....
 ![登录流程图](../image/login.png)
 
-[EM登录](#EM)
+[EM登录](#em)
 
 [微信登录](#wechat)
 
@@ -52,7 +52,7 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 [防沉迷详细规则](#chenmi)
 
 ---
-### <a id="EM">EM登录</a>
+### <a id="em">EM登录</a>
 
 路径：/EMLogin
 ```
