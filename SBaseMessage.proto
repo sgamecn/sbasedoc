@@ -182,6 +182,23 @@ message BindMobileResponse {
   Code Code = 1;
 }
 
+//查询手机号码绑定状态接口
+message QueryMobileBindStatus {
+  // em参数
+  string E = 1;
+  string M = 2;
+
+  string SGameId = 5; // 游戏ID
+  string Sign = 6;  // 签名
+  int64 Namespace = 7;
+}
+
+//查询手机号码绑定状态接口回复
+message QueryMobileBindStatusResponse {
+  Code Code = 1;
+  int64 Status = 2; // 0 未绑定 1 已绑定
+}
+
 //支付
 
 //下单

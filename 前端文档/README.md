@@ -34,6 +34,8 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 
 [手机号登录](#MobileLogin)
 
+[查询账号手机绑定状态](#QueryMobileBindStatus)
+
 ## 支付
 
 [支付下单](#transaction)
@@ -334,6 +336,40 @@ message MobileLoginRequest {
 [签名规则](#sign)
 
 [通用登录回复](#loginresp)
+
+### <a id="QueryMobileBindStatus">查询账号手机绑定状态</a>
+路径：/QueryMobileBind
+
+```
+Method: POST
+```
+
+###### 请求参数
+```protobuf
+syntax = "proto3";
+
+//查询手机号码绑定状态接口
+message QueryMobileBindStatus {
+  // em参数
+  string E = 1;
+  string M = 2;
+
+  string SGameId = 5; // 游戏ID
+  string Sign = 6;  // 签名
+  int64 Namespace = 7;
+}
+
+//查询手机号码绑定状态接口回复
+message QueryMobileBindStatusResponse {
+  Code Code = 1;
+  int64 Status = 2; // 0 未绑定 1 已绑定
+}
+```
+确认Code为成功时，才可以验证手机绑定状态
+
+[签名规则](#sign)
+
+[code中台常量定义](#code)
 
 ### <a id="loginresp">通用登录回复</a>
 ```protobuf
