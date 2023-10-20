@@ -56,7 +56,7 @@ message WlcLoginTrace {
 
 //Wlc上报登录轨迹回复 SBase->Client
 message WLcLoginTraceResp {
-  Code Code = 1;  // 错误码  详见code中台常量定义
+  CODE Code = 1;  // 错误码  详见code中台常量定义
 }
 ```
 [签名规则](#sign)
@@ -145,7 +145,7 @@ message SendGoodsReq {
 }
 
 message SendGoodsResp {
-  Code  Code = 1; // 错误码  详见code中台常量定义
+  CODE  Code = 1; // 错误码  详见code中台常量定义
 }
 ```
 [签名规则](#sign)
@@ -171,33 +171,40 @@ message SendGoodsResp {
 ```protobuf
 syntax = "proto3";
 //错误码
-enum Code {
-  CODE_DEFAULT 			      = 0;
-  CODE_SUCCESS            = 200; //成功
-  CODE_PARAM_MISS         = 116; //参数缺失
-  CODE_SERVICE_BUSY       = 126; //服务器繁忙（内部逻辑错误）
-  CODE_TOKEN_EXPIRED      = 128; //令牌已过期
-  CODE_INVALID_NAMESPACE  = 157; //无效的Namespace
-  CODE_PASSWORD_ERROR     = 158; //密码错误
-  CODE_ACCOUNT_NOT_EXIST  = 159; //账号不存在
-  CODE_SEND_SMS_TOO_FAST  = 160; //发送短信过快
-  CODE_VALIDATE_CODE_ERR  = 161; //验证码错误
-  CODE_PAY_CALLBACK_ERROR  = 162; //支付回调错误
-  CODE_MOBILE_EXIST       = 163; //手机账号已存在
-  BAN_SANDBOX             = 164; //禁止沙盒测试
-  WLC_ACCOUNT_NOT_EXIST   = 165; //账号不存在
-  WLC_TRACE_ERROR         = 166; //wlc上报失败
-  WLC_CHECK_ERROR         = 167; //wlc校验失败
-  WLC_QUERY_ERROR         = 168; //wlc查询失败
-  SIGN_ERROR              = 169; //签名错误
-  S_GAME_ID_NOT_EXIST      = 170; //sgame_id不存在
-  CODE_LOGIN_TYP_ERROR    = 171; //未开放对应登录方式
-  CODE_PAY_TYP_ERROR      = 172; //未开放对应支付方式
-  CODE_IS_NOT_ADULT_LIMIT = 173; //未成年人限制
-  RECHARGE_SINGLE_LIMIT   = 174; //充值单笔限额
-  RECHARGE_ACCUMULATE     = 175; //充值累计限额
-  CODE_NOT_FOUND          = 404; //APPLE资源不存在
-  CODE_SERVER_ERROR       = 500; //APPLE服务器错误
+//错误码
+enum CODE {
+  DEFAULT 			           = 0;
+  SUCCESS                 = 200; //成功
+  SERVICE_BUSY            = 110; //服务器繁忙（内部逻辑错误）
+  PARAM_MISS              = 111; //参数缺失
+  SIGN_ERROR              = 112; //签名错误
+  ACCOUNT_NOT_EXIST       = 113; //账号不存在
+  EM_DECODER_ERROR        = 114; //em解码错误
+  INVALID_NAMESPACE       = 115; //无效的Namespace
+  IS_NOT_ADULT_LIMIT      = 116; //未成年人限制
+
+  LOGIN_TYP_NOT_OPEN      = 130; //未开放对应登录方式
+  LOGIN_VERIFY_FAIL       = 132; //登录验证失败
+  LOGIN_TOKEN_EXPIRED     = 133; //令牌已过期
+  LOGIN_QUERY_WLC_ERROR   = 134; //登录查询wlc失败
+
+  SEND_SMS_TOO_FAST       = 160; //发送短信过快
+  VALIDATE_CODE_ERR       = 161; //验证码错误
+  PAY_CALLBACK_ERROR      = 162; //支付回调错误
+  MOBILE_EXIST            = 163; //手机账号已存在
+
+  WLC_CHECK_ERROR         = 180; //wlc校验失败
+  WLC_TRACE_ERROR         = 181; //wlc上报失败
+  WLC_QUERY_ERROR         = 182; //wlc查询失败
+
+  S_GAME_ID_NOT_EXIST     = 170; //s_game_id不存在
+  ID_NUM_ERROR            = 176; //身份证号码错误
+
+  PAY_TYP_NOT_OPEN              = 300; //未开放对应支付方式
+  PAY_TRANSACTION_PARAM_ERROR   = 301; //下单失败
+  PAY_RECHARGE_SINGLE_LIMIT     = 302; //充值单笔限额
+  PAY_RECHARGE_ACCUMULATE_LIMIT = 303; //充值累计限额
+  PAY_BAN_SANDBOX               = 304; //禁止沙盒测试
 }
 ```
 
