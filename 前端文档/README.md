@@ -384,6 +384,7 @@ message WlcIndulgeInfo {
   double AccumulateRechargeMax = 4;  // 累计充值最大金额 -1 无限制
 }
 
+// 登录回复
 message LoginResult {
   CODE Code = 1;  //参考 code中台常量定义
 
@@ -391,18 +392,22 @@ message LoginResult {
   string E = 2;
   string M = 3;
 
-  int64 Uid = 4;  // 用户ID
-  string DisplayName = 5; // 用户昵称
+  int64 Uid = 4;
+  string DisplayName = 5;
 
-  string PFType = 6;  // 平台类型
-  string PFID = 7;  // 平台ID
+  string PFType = 6;
+  string PFID = 7;
 
   string Token = 8;
   string Key = 9;
 
-  int64 WlcStatus = 10; // 实名认证状态 0 认证成功 1认证中 2 认证失败
+  int64 WlcStatus = 10; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
 
-  WlcIndulgeInfo WlcIndulgeInfo = 11; // 防沉迷信息
+  WlcIndulgeInfo WlcIndulgeInfo = 11;
+
+  int64 accountStatus = 12; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+
+  string ConnAddr = 13; // 连接地址
 }
 
 ```
@@ -547,6 +552,7 @@ ApplePayVerifyIdTokenV1Rsp 参数 SuccessTransactionList 为成功的[transactio
 ```protobuf
 syntax = "proto3";
 
+//错误码
 enum CODE {
   DEFAULT 			           = 0;
   SUCCESS                 = 200; //成功
@@ -562,6 +568,7 @@ enum CODE {
   LOGIN_VERIFY_FAIL       = 132; //登录验证失败
   LOGIN_TOKEN_EXPIRED     = 133; //令牌已过期
   LOGIN_QUERY_WLC_ERROR   = 134; //登录查询wlc失败
+  LOGIN_EM_BAN            = 135; //登录em登录方式禁止 收到此错误码后，客户端应该删除本地的em登录方式
 
   SEND_SMS_TOO_FAST       = 160; //发送短信过快
   VALIDATE_CODE_ERR       = 161; //验证码错误

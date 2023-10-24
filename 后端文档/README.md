@@ -171,7 +171,6 @@ message SendGoodsResp {
 ```protobuf
 syntax = "proto3";
 //错误码
-//错误码
 enum CODE {
   DEFAULT 			           = 0;
   SUCCESS                 = 200; //成功
@@ -187,6 +186,7 @@ enum CODE {
   LOGIN_VERIFY_FAIL       = 132; //登录验证失败
   LOGIN_TOKEN_EXPIRED     = 133; //令牌已过期
   LOGIN_QUERY_WLC_ERROR   = 134; //登录查询wlc失败
+  LOGIN_EM_BAN            = 135; //登录em登录方式禁止 收到此错误码后，客户端应该删除本地的em登录方式
 
   SEND_SMS_TOO_FAST       = 160; //发送短信过快
   VALIDATE_CODE_ERR       = 161; //验证码错误
