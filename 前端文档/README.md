@@ -398,16 +398,12 @@ message LoginResult {
   string PFType = 6;
   string PFID = 7;
 
-  string Token = 8;
-  string Key = 9;
+  int64 WlcStatus = 8; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
 
-  int64 WlcStatus = 10; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
+  WlcIndulgeInfo WlcIndulgeInfo = 9;
 
-  WlcIndulgeInfo WlcIndulgeInfo = 11;
-
-  int64 accountStatus = 12; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
-
-  string ConnAddr = 13; // 连接地址
+  int64 GameAccountStatus = 10; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+  int64 FreezeTime = 11; // 冻结时间
 }
 
 ```
@@ -552,7 +548,6 @@ ApplePayVerifyIdTokenV1Rsp 参数 SuccessTransactionList 为成功的[transactio
 ```protobuf
 syntax = "proto3";
 
-//错误码
 enum CODE {
   DEFAULT 			           = 0;
   SUCCESS                 = 200; //成功
@@ -587,6 +582,8 @@ enum CODE {
   PAY_RECHARGE_SINGLE_LIMIT     = 302; //充值单笔限额
   PAY_RECHARGE_ACCUMULATE_LIMIT = 303; //充值累计限额
   PAY_BAN_SANDBOX               = 304; //禁止沙盒测试
+
+  DELETE_GAME_USER_NOT_EXIST = 400; //删除账号不存在
 }
 ```
 

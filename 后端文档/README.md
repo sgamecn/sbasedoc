@@ -170,7 +170,7 @@ message SendGoodsResp {
 ### <a id="code">code中台常量定义</a>
 ```protobuf
 syntax = "proto3";
-//错误码
+
 enum CODE {
   DEFAULT 			           = 0;
   SUCCESS                 = 200; //成功
@@ -205,6 +205,8 @@ enum CODE {
   PAY_RECHARGE_SINGLE_LIMIT     = 302; //充值单笔限额
   PAY_RECHARGE_ACCUMULATE_LIMIT = 303; //充值累计限额
   PAY_BAN_SANDBOX               = 304; //禁止沙盒测试
+
+  DELETE_GAME_USER_NOT_EXIST = 400; //删除账号不存在
 }
 ```
 
