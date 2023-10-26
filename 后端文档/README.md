@@ -94,12 +94,6 @@ message TransactionRequest {
   TAType Type = 7;
   bool IsSandbox = 8;
 
-  // em参数
-  string E = 9;
-  string M = 10;
-
-  //Uid     int64  `json:"uid"`
-  string Sign = 11; // 签名 详见签名规则
   string ReqTime = 12;
 }
 

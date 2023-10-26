@@ -66,14 +66,16 @@ Method: POST
 syntax = "proto3";
 
 message EmLoginRequest {
-    int64 Namespace = 1;
-    
-    // em参数
-    string E = 2;
-    string M = 3;
-    
-    string SGameId = 4; // 游戏ID
-    string Sign = 5;  // 签名 详见签名规则
+  int64 Namespace = 1;
+  
+  // em参数
+  string E = 2;
+  string M = 3;
+  
+  string SGameId = 4; // 游戏ID
+  string Sign = 5;  // 签名 详见签名规则
+
+  string ReqTime = 6; // 请求时间
 }
 
 // 响应参数 见通用登录回复
@@ -102,6 +104,8 @@ message WechatLoginRequest {
   string Sign = 3;  // 签名 详见签名规则
 
   string Code = 4; // 微信返回的code
+
+  string ReqTime = 5; // 请求时间
 }
 
 // 响应参数 见通用登录回复
@@ -133,6 +137,8 @@ message TTLoginRequest {
 
   string AccessToken = 4; // TapTap返回的access_token
   string MacKey = 5;  // TapTap返回的mac_key
+
+  string ReqTime = 6; // 请求时间
 }
 
 // 响应参数 见通用登录回复
@@ -160,6 +166,8 @@ message QQLoginRequest {
   string Sign = 3;  // 签名 详见签名规则
 
   string AccessToken = 4; // QQ返回的access_token
+
+  string ReqTime = 5; // 请求时间
 }
 
 // 响应参数 见通用登录回复
@@ -189,6 +197,8 @@ message YXLoginRequest {
 
   string Account = 4; // 英雄账号
   string Passwd = 5;  // 英雄密码
+
+  string ReqTime = 6; // 请求时间
 }
 
 // 响应参数 见通用登录回复
@@ -219,6 +229,8 @@ message ThirdLoginRequest {
 
   string ChannelId = 4; // 渠道ID
   string CUid = 5;  // 渠道UID
+
+  string ReqTime = 6; // 请求时间
 }
 
 ```
@@ -246,6 +258,8 @@ message AppleLoginRequest {
   string Sign = 3;  // 签名 详见签名规则
   
   string Code = 4;  // 苹果返回的code
+
+  string ReqTime = 5; // 请求时间
 }
 
 // 响应参数 见通用登录回复
@@ -271,6 +285,8 @@ message SendMobileMessageRequest {
   int64 Namespace = 3;
   string Mobile = 4; //手机号
   string SendType = 5; //发送类型 1绑定 2登录
+
+  string ReqTime = 6; // 请求时间
 }
 
 message SendMobileMessageResponse {
@@ -301,6 +317,8 @@ message BindMobileRequest {
   string ValidateCode   = 6;  //验证码
   string ChannelId  = 7;    //渠道ID
   string CUid = 8;  //渠道用户ID
+
+  string ReqTime = 9; // 请求时间
 }
 
 message BindMobileResponse {
@@ -331,6 +349,8 @@ message MobileLoginRequest {
   string Mobile = 4;
   string DeviceNo = 5;
   string ValidateCode   = 6;
+
+  string ReqTime = 7; // 请求时间
 }
 ```
 [签名规则](#sign)
@@ -357,6 +377,8 @@ message QueryMobileBindStatus {
   string SGameId = 5; // 游戏ID
   string Sign = 6;  // 签名
   int64 Namespace = 7;
+
+  string ReqTime = 8; // 请求时间
 }
 
 //查询手机号码绑定状态接口回复
@@ -476,7 +498,13 @@ syntax = "proto3";
 
 //下单请求 Server->Client->SBase 服务器加工消息，客户端不用关心
 message TransactionRequestEncode {
-  string encodeStr = 1; // 透传参数 由服务器加工
+  string E = 1;
+  string M = 2;
+  string SGameId = 3;
+  string Sign = 4;
+  string ReqTime = 5;
+
+  string encodeStr = 6;
 }
 
 //下单请求回复 Client->SBase
@@ -599,4 +627,4 @@ enum CODE {
 
 请求消息中的 Sign 字段，通过签名规则生成：
 
-    签名规则为：MD5(游戏标识 + "-" + 前端密匙)
+    签名规则为：MD5(游戏标识 + "-" + 前端密匙 + "-" + ReqTime)

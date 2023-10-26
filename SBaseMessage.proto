@@ -54,6 +54,8 @@ message EmLoginRequest {
 
   string SGameId = 4; // 游戏ID
   string Sign = 5;  // 签名
+
+  string ReqTime = 6; // 请求时间
 }
 
 //微信登录
@@ -64,6 +66,8 @@ message WechatLoginRequest {
   string Sign = 3;  // 签名
 
   string Code = 4; // 微信返回的code
+
+  string ReqTime = 5; // 请求时间
 }
 
 //TapTap登录
@@ -75,6 +79,8 @@ message TTLoginRequest {
 
   string AccessToken = 4; // TapTap返回的access_token
   string MacKey = 5;  // TapTap返回的mac_key
+
+  string ReqTime = 6; // 请求时间
 }
 
 //英雄登录
@@ -86,6 +92,8 @@ message YXLoginRequest {
 
   string Account = 4; // 英雄账号
   string Passwd = 5;  // 英雄密码
+
+  string ReqTime = 6; // 请求时间
 }
 
 //第三方登录
@@ -97,6 +105,8 @@ message ThirdLoginRequest {
 
   string ChannelId = 4; // 渠道ID
   string CUid = 5;  // 渠道UID
+
+  string ReqTime = 6; // 请求时间
 }
 
 //QQ登录
@@ -107,6 +117,8 @@ message QQLoginRequest {
   string Sign = 3;  // 签名
 
   string AccessToken = 4; // QQ返回的access_token
+
+  string ReqTime = 5; // 请求时间
 }
 
 //Apple登录
@@ -117,6 +129,8 @@ message AppleLoginRequest {
   string Sign = 3;  // 签名
 
   string Code = 4;  // 苹果返回的code
+
+  string ReqTime = 5; // 请求时间
 }
 
 //手机号码登录
@@ -127,6 +141,8 @@ message MobileLoginRequest {
   string Mobile = 4;
   string DeviceNo = 5;
   string ValidateCode   = 6;
+
+  string ReqTime = 7; // 请求时间
 }
 
 //WlcIndulgeInfo 防沉迷信息
@@ -167,6 +183,8 @@ message SendMobileMessageRequest {
   int64 Namespace = 3;
   string Mobile = 4;
   string SendType = 5;
+
+  string ReqTime = 6; // 请求时间
 }
 
 //发送短信校验码接口回复
@@ -184,6 +202,8 @@ message BindMobileRequest {
   string ValidateCode   = 6;
   string ChannelId  = 7;
   string CUid = 8;
+
+  string ReqTime = 9; // 请求时间
 }
 
 //绑定手机号码接口回复
@@ -200,6 +220,8 @@ message QueryMobileBindStatus {
   string SGameId = 5; // 游戏ID
   string Sign = 6;  // 签名
   int64 Namespace = 7;
+
+  string ReqTime = 8; // 请求时间
 }
 
 //查询手机号码绑定状态接口回复
@@ -223,9 +245,15 @@ message Amount {
   string Currency = 2;
 }
 
-//下单请求 Server->Client->SBase 服务器加工消息，客户端不用关心
+//下单请求
 message TransactionRequestEncode {
-  string encodeStr = 1;
+  string E = 1;
+  string M = 2;
+  string SGameId = 3;
+  string Sign = 4;
+  string ReqTime = 5;
+
+  string encodeStr = 6;
 }
 
 //下单请求具体参数
@@ -239,12 +267,6 @@ message TransactionRequest {
   TAType Type = 7;
   bool IsSandbox = 8;
 
-  // em参数
-  string E = 9;
-  string M = 10;
-
-  //Uid     int64  `json:"uid"`
-  string Sign = 11;
   string ReqTime = 12;
 }
 
@@ -280,6 +302,9 @@ message TransactionResponse {
 message ApplePayVerifyIdTokenV1 {
   string SGameId = 1;
   string Receipt = 2;
+
+  string Sign = 3;  // 签名
+  string ReqTime = 4; // 请求时间
 }
 
 //Apple支付回调 SBase->Client
@@ -314,6 +339,8 @@ message WlcCheckReq {
 
     string SGameId = 5; // 游戏ID
     string Sign = 6;  // 签名
+
+    string ReqTime = 7; // 请求时间
 }
 
 //Wlc上报(实名认证)回复 SBase->Client
@@ -361,6 +388,8 @@ message DeleteAccountRequest {
   int64 Namespace = 5;
 
   string IdNum = 6;
+
+  string ReqTime = 7; // 请求时间
 }
 
 message DeleteAccountResponse {
