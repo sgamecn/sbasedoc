@@ -381,11 +381,19 @@ message QueryMobileBindStatus {
   string ReqTime = 8; // 请求时间
 }
 
+enum TipStatus {
+  Tip_DEFAULT = 0;
+  Tip_CAN_LEAVE_OUT   = 1; //弹窗可跳过
+  Tip_CAN_NOT_LEAVE_OUT = 2; //弹窗不可跳过
+}
+
 //查询手机号码绑定状态接口回复
 message QueryMobileBindStatusResponse {
   CODE Code = 1;
   int64 Status = 2; // 0 未绑定 1 已绑定
+  TipStatus TipStatus = 3;
 }
+
 ```
 确认Code为成功时，才可以验证手机绑定状态
 
