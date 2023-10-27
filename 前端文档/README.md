@@ -397,7 +397,7 @@ message QueryMobileBindStatusResponse {
 ```
 确认Code为成功时，才可以验证手机绑定状态
 
-如果收到TipStatus 为不弹窗状态，直接跳过即可
+如果收到错误码为：MOBILE_BIND_NOT_OPEN = 117 时，表示手机绑定未开放
 
 [签名规则](#sign)
 
