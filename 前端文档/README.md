@@ -504,7 +504,7 @@ message TransactionRequestEncode {
   string Sign = 4;
   string ReqTime = 5;
 
-  string encodeStr = 6;
+  string encodeStr = 6; //有后端处理后的支付加密信息.前端透传给SBase 即可
 }
 
 //下单请求回复 Client->SBase
@@ -627,4 +627,5 @@ enum CODE {
 
 请求消息中的 Sign 字段，通过签名规则生成：
 
-    签名规则为：MD5(游戏标识 + "-" + 前端密匙 + "-" + ReqTime)
+    签名规则为：MD5(游戏标识 + "-" + 前端密匙 + "-" + ReqTime) 
+    ReqTime 为发送请求时的时间戳
