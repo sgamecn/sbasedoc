@@ -224,10 +224,17 @@ message QueryMobileBindStatus {
   string ReqTime = 8; // 请求时间
 }
 
+enum TipStatus {
+  Tip_DEFAULT = 0;  //不弹窗
+  Tip_CAN_LEAVE_OUT   = 1; //弹窗可跳过
+  Tip_CAN_NOT_LEAVE_OUT = 2; //弹窗不可跳过
+}
+
 //查询手机号码绑定状态接口回复
 message QueryMobileBindStatusResponse {
   CODE Code = 1;
   int64 Status = 2; // 0 未绑定 1 已绑定
+  TipStatus TipStatus = 3;
 }
 
 //支付
@@ -253,7 +260,7 @@ message TransactionRequestEncode {
   string Sign = 4;
   string ReqTime = 5;
 
-  string encodeStr = 6;
+  string encodeStr = 6; //服务器加密字段
 }
 
 //下单请求具体参数
