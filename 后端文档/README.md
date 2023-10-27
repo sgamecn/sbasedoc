@@ -175,6 +175,7 @@ enum CODE {
   EM_DECODER_ERROR        = 114; //em解码错误
   INVALID_NAMESPACE       = 115; //无效的Namespace
   IS_NOT_ADULT_LIMIT      = 116; //未成年人限制
+  MOBILE_BIND_NOT_OPEN    = 117; //手机绑定未开放
 
   LOGIN_TYP_NOT_OPEN      = 130; //未开放对应登录方式
   LOGIN_VERIFY_FAIL       = 132; //登录验证失败
