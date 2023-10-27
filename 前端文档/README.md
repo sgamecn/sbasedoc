@@ -382,7 +382,7 @@ message QueryMobileBindStatus {
 }
 
 enum TipStatus {
-  Tip_DEFAULT = 0;
+  Tip_DEFAULT = 0;  //不弹窗
   Tip_CAN_LEAVE_OUT   = 1; //弹窗可跳过
   Tip_CAN_NOT_LEAVE_OUT = 2; //弹窗不可跳过
 }
@@ -396,6 +396,8 @@ message QueryMobileBindStatusResponse {
 
 ```
 确认Code为成功时，才可以验证手机绑定状态
+
+如果收到TipStatus 为不弹窗状态，直接跳过即可
 
 [签名规则](#sign)
 
