@@ -374,11 +374,11 @@ message QueryMobileBindStatus {
   string E = 1;
   string M = 2;
 
-  string SGameId = 5; // 游戏ID
-  string Sign = 6;  // 签名
-  int64 Namespace = 7;
+  string SGameId = 3; // 游戏ID
+  string Sign = 4;  // 签名
+  int64 Namespace = 5;
 
-  string ReqTime = 8; // 请求时间
+  string ReqTime = 6; // 请求时间
 }
 
 enum TipStatus {
