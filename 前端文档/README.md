@@ -424,20 +424,17 @@ message LoginResult {
   string E = 2;
   string M = 3;
 
-  int64 Uid = 4;  // 用户ID
-  int64 OpenId = 5; // 用户游戏唯一ID
+  string DisplayName = 4;
 
-  string DisplayName = 6;
+  string PFType = 5;
+  string PFID = 6;
 
-  string PFType = 7;
-  string PFID = 8;
+  int64 WlcStatus = 7; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
 
-  int64 WlcStatus = 9; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
+  WlcIndulgeInfo WlcIndulgeInfo = 8;
 
-  WlcIndulgeInfo WlcIndulgeInfo = 10;
-
-  int64 GameAccountStatus = 11; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
-  int64 FreezeTime = 12; // 冻结时间
+  int64 GameAccountStatus = 9; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+  int64 FreezeTime = 10; // 冻结时间
 }
 
 ```

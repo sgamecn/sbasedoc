@@ -50,7 +50,7 @@ enum BTType {
 }
 
 message WlcLoginTrace {
-  int64 Uid = 1; // 游戏用户ID
+  string Uid = 1; // 游戏用户ID (特殊处理专门用于上传的ID，由前端或者良哥回传)
   BTType BT = 2;  // 行为类型
 }
 

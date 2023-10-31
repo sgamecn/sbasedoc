@@ -163,9 +163,6 @@ message LoginResult {
   string E = 2;
   string M = 3;
 
-  int64 Uid = 4;
-  int64 OpenId = 5;
-
   string DisplayName = 6;
 
   string PFType = 7;
@@ -369,7 +366,7 @@ enum BTType {
 
 //Wlc上报登录轨迹结构
 message WlcLoginTrace {
-  int64 Uid = 1; // 游戏用户ID
+  string Uid = 1; // 游戏用户ID
   BTType BT = 2;
 }
 
