@@ -539,6 +539,11 @@ type AppPayParams struct {
 
 [通用登录回复](#loginresp)
 
+[微信SDK文档](https://pay.weixin.qq.com/docs/merchant/sdk-tools/sdk-tool.html)
+
+[支付宝SDK文档](https://opendocs.alipay.com/open/204/01dcc0?pathHash=cf89b2be)
+
+
 ### <a id="applepay">apple支付</a>
 ![支付流程图](../image/ApplePay.png)
 
