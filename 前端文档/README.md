@@ -584,9 +584,8 @@ enum CODE {
   SIGN_ERROR              = 112; //签名错误
   ACCOUNT_NOT_EXIST       = 113; //账号不存在
   EM_DECODER_ERROR        = 114; //em解码错误
-  
+
   IS_NOT_ADULT_LIMIT      = 116; //未成年人限制
-  MOBILE_BIND_NOT_OPEN    = 117; //手机绑定未开放
 
   LOGIN_TYP_NOT_OPEN      = 130; //未开放对应登录方式
   LOGIN_VERIFY_FAIL       = 132; //登录验证失败
@@ -598,6 +597,7 @@ enum CODE {
   VALIDATE_CODE_ERR       = 161; //验证码错误
   PAY_CALLBACK_ERROR      = 162; //支付回调错误
   MOBILE_EXIST            = 163; //手机账号已存在
+  SEND_BUSINESS_LIMIT     = 164; //业务限流
 
   WLC_CHECK_ERROR         = 180; //wlc校验失败
   WLC_TRACE_ERROR         = 181; //wlc上报失败
