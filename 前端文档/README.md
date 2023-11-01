@@ -66,8 +66,6 @@ Method: POST
 syntax = "proto3";
 
 message EmLoginRequest {
-  int64 Namespace = 1;
-  
   // em参数
   string E = 2;
   string M = 3;
@@ -98,8 +96,7 @@ Method: POST
 syntax = "proto3";
 
 message WechatLoginRequest {
-  int64 Namespace = 1;
-
+  
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名 详见签名规则
 
@@ -130,7 +127,6 @@ Method: POST
 syntax = "proto3";
 
 message TTLoginRequest {
-  int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名 详见签名规则
@@ -160,7 +156,6 @@ syntax = "proto3";
 
 //QQ登录
 message QQLoginRequest {
-  int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名 详见签名规则
@@ -190,8 +185,7 @@ ContentType: application/json
 syntax = "proto3";
 
 message YXLoginRequest {
-  int64 Namespace = 1;
-
+  
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名 详见签名规则
 
@@ -222,7 +216,6 @@ syntax = "proto3";
 
 //第三方登录
 message ThirdLoginRequest {
-  int64 Namespace = 1;
 
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名 详见签名规则
@@ -252,7 +245,6 @@ ContentType: application/json
 syntax = "proto3";
 
 message AppleLoginRequest {
-  int64 Namespace = 1;
   
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名 详见签名规则
@@ -282,7 +274,7 @@ syntax = "proto3";
 message SendMobileMessageRequest {
   string SGameId = 1;
   string Sign = 2;  // 签名 详见签名规则
-  int64 Namespace = 3;
+  
   string Mobile = 4; //手机号
   string SendType = 5; //发送类型 1绑定 2登录
 
@@ -311,7 +303,7 @@ syntax = "proto3";
 message BindMobileRequest {
   string SGameId  = 1;
   string Sign = 2;  // 签名 详见签名规则
-  int64 Namespace  = 3;
+  
   string Mobile = 4;  //手机号
   string DeviceNo = 5;  //设备号
   string ValidateCode   = 6;  //验证码
@@ -345,7 +337,7 @@ syntax = "proto3";
 message MobileLoginRequest {
   string SGameId = 1;
   string Sign = 2;  // 签名 详见签名规则
-  int64  Namespace = 3;
+  
   string Mobile = 4;
   string DeviceNo = 5;
   string ValidateCode   = 6;
@@ -376,7 +368,6 @@ message QueryMobileBindStatus {
 
   string SGameId = 3; // 游戏ID
   string Sign = 4;  // 签名
-  int64 Namespace = 5;
 
   string ReqTime = 6; // 请求时间
 }
@@ -417,7 +408,7 @@ message WlcIndulgeInfo {
 }
 
 // 登录回复
-message LoginResult {
+message EMResult {
   CODE Code = 1;  //参考 code中台常量定义
 
   // em参数
@@ -593,7 +584,7 @@ enum CODE {
   SIGN_ERROR              = 112; //签名错误
   ACCOUNT_NOT_EXIST       = 113; //账号不存在
   EM_DECODER_ERROR        = 114; //em解码错误
-  INVALID_NAMESPACE       = 115; //无效的Namespace
+  
   IS_NOT_ADULT_LIMIT      = 116; //未成年人限制
   MOBILE_BIND_NOT_OPEN    = 117; //手机绑定未开放
 

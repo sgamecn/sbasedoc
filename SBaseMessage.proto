@@ -14,7 +14,7 @@ enum CODE {
   SIGN_ERROR              = 112; //签名错误
   ACCOUNT_NOT_EXIST       = 113; //账号不存在
   EM_DECODER_ERROR        = 114; //em解码错误
-  INVALID_NAMESPACE       = 115; //无效的Namespace
+
   IS_NOT_ADULT_LIMIT      = 116; //未成年人限制
   MOBILE_BIND_NOT_OPEN    = 117; //手机绑定未开放
 
@@ -47,8 +47,6 @@ enum CODE {
 
 //SNS账号登录
 message EmLoginRequest {
-  int64 Namespace = 1;
-
   // em参数
   string E = 2;
   string M = 3;
@@ -61,8 +59,6 @@ message EmLoginRequest {
 
 //微信登录
 message WechatLoginRequest {
-  int64 Namespace = 1;
-
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
@@ -73,8 +69,6 @@ message WechatLoginRequest {
 
 //TapTap登录
 message TTLoginRequest {
-  int64 Namespace = 1;
-
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
@@ -86,8 +80,6 @@ message TTLoginRequest {
 
 //英雄登录
 message YXLoginRequest {
-  int64 Namespace = 1;
-
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
@@ -99,8 +91,6 @@ message YXLoginRequest {
 
 //第三方登录
 message ThirdLoginRequest {
-  int64 Namespace = 1;
-
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
@@ -112,8 +102,6 @@ message ThirdLoginRequest {
 
 //QQ登录
 message QQLoginRequest {
-  int64 Namespace = 1;
-
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
@@ -124,8 +112,6 @@ message QQLoginRequest {
 
 //Apple登录
 message AppleLoginRequest {
-  int64 Namespace = 1;
-
   string SGameId = 2; // 游戏ID
   string Sign = 3;  // 签名
 
@@ -138,7 +124,7 @@ message AppleLoginRequest {
 message MobileLoginRequest {
   string SGameId = 1;
   string Sign = 2;
-  int64  Namespace = 3;
+
   string Mobile = 4;
   string DeviceNo = 5;
   string ValidateCode   = 6;
@@ -156,31 +142,31 @@ message WlcIndulgeInfo {
 }
 
 // 登录回复
-message LoginResult {
+message EMResult {
   CODE Code = 1;  //参考 code中台常量定义
 
   // em参数
   string E = 2;
   string M = 3;
 
-  string DisplayName = 6;
+  string DisplayName = 4;
 
-  string PFType = 7;
-  string PFID = 8;
+  string PFType = 5;
+  string PFID = 6;
 
-  int64 WlcStatus = 9; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
+  int64 WlcStatus = 7; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
 
-  WlcIndulgeInfo WlcIndulgeInfo = 10;
+  WlcIndulgeInfo WlcIndulgeInfo = 8;
 
-  int64 GameAccountStatus = 11; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
-  int64 FreezeTime = 12; // 冻结时间
+  int64 GameAccountStatus = 9; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+  int64 FreezeTime = 10; // 冻结时间
 }
 
 //发送短信校验码接口
 message SendMobileMessageRequest {
   string SGameId = 1;
   string Sign = 2;
-  int64 Namespace = 3;
+
   string Mobile = 4;
   string SendType = 5;
 
@@ -196,7 +182,7 @@ message SendMobileMessageResponse {
 message BindMobileRequest {
   string SGameId  = 1;
   string Sign = 2;
-  int64 Namespace  = 3;
+
   string Mobile = 4;
   string DeviceNo = 5;
   string ValidateCode   = 6;
@@ -219,7 +205,6 @@ message QueryMobileBindStatus {
 
   string SGameId = 3; // 游戏ID
   string Sign = 4;  // 签名
-  int64 Namespace = 5;
 
   string ReqTime = 6; // 请求时间
 }
@@ -392,7 +377,6 @@ message DeleteAccountRequest {
 
   string SGameId = 3;
   string Sign = 4;
-  int64 Namespace = 5;
 
   string IdNum = 6;
 
