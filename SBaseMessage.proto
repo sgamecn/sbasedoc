@@ -250,16 +250,22 @@ message TransactionRequestEncode {
 
 //下单请求具体参数
 message TransactionRequest {
-  string GameOrderId = 1;
-  string Desc = 2;
-  Amount Amount = 3;
-  string GameNotifyUrl = 4;
-  string Attach = 5;
-  string SGameId = 6;
-  TAType Type = 7;
-  bool IsSandbox = 8;
+  string GameOrderId = 1; // 游戏订单ID
+  string Desc = 2;  // 描述
+  Amount Amount = 3;  // 金额
+  string GameNotifyUrl = 4; // 游戏回调地址
+  string Attach = 5;  // 透传参数
+  string SGameId = 6; // 游戏ID 例如影三为 101
+  TAType Type = 7;  // 支付类型
+  bool IsSandbox = 8; // 是否沙盒测试
 
-  string ReqTime = 12;
+  string ReqTime = 12;  // 请求时间
+
+  //可选参数
+  string UserId = 13; // 用户ID
+  string ServerId = 14; // 服务器ID
+  string RoleId = 15; // 角色ID
+  string RoleName = 16; // 角色名
 }
 
 //下单回复参数 SBase->Client
