@@ -417,18 +417,31 @@ message EMResult {
 
   string DisplayName = 4;
 
-  string PFType = 5;
+  string PFType = 5; //平台类型 见PFType定义
   string PFID = 6;
 
-  int64 WlcStatus = 7; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
+  int64 WlcStatus = 7; // 实名认证状态 -1 初始化状态 0 认证通过 1 认证中 2 认证失败
 
   WlcIndulgeInfo WlcIndulgeInfo = 8;
 
   int64 GameAccountStatus = 9; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
   int64 FreezeTime = 10; // 冻结时间
 }
-
 ```
+
+PFType 为平台类型
+```go
+const (
+    SNS_WX           TypeSns = "WX"    // 微信
+    SNS_QQ           TypeSns = "QQ"    // QQ
+    SNS_TAPTAP       TypeSns = "TAP"   // taptap
+    SNS_HERO_PWD     TypeSns = "HERO"  // 英雄账号密码
+    SNS_PHONE_NUMBER TypeSns = "PN"    // 手机号码
+    SNS_THIRD        TypeSns = "THIRD" // 第三方
+    SNS_APPLE        TypeSns = "APPLE" // 苹果
+)
+```
+[防沉迷详细规则](#chenmi)
 
 ### <a id="realcheck">实名认证</a>   
 路径：/WlcCheck
