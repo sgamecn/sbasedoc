@@ -14,6 +14,7 @@ enum CODE {
   SIGN_ERROR              = 112; //签名错误
   ACCOUNT_NOT_EXIST       = 113; //账号不存在
   EM_DECODER_ERROR        = 114; //em解码错误
+  //ACCOUNT_INFO_NOT_EXIST  = 115; //账号Info不存在
 
   IS_NOT_ADULT_LIMIT      = 116; //未成年人限制
 
@@ -22,6 +23,9 @@ enum CODE {
   LOGIN_TOKEN_EXPIRED     = 133; //令牌已过期
   LOGIN_QUERY_WLC_ERROR   = 134; //登录查询wlc失败
   LOGIN_EM_BAN            = 135; //登录em登录方式禁止 收到此错误码后，客户端应该删除本地的em登录方式
+
+  //Mobile_DEVICE_NO_FORBID = 150; //设备号禁止
+  //IP_FORBID               = 151; //IP禁止
 
   SEND_SMS_TOO_FAST       = 160; //发送短信过快
   VALIDATE_CODE_ERR       = 161; //验证码错误
@@ -121,7 +125,7 @@ message AppleLoginRequest {
 }
 
 //手机号码登录
-message MobileLoginRequest {
+message   MobileLoginRequest {
   string SGameId = 1;
   string Sign = 2;
 
@@ -137,8 +141,10 @@ message WlcIndulgeInfo {
   bool IsAdult = 1; // 是否成年
   int64 UserBirthday = 2; // 用户生日
 
-  double SingleRechargeMax = 3;  // 单笔充值最大金额 -1 无限制
-  double AccumulateRechargeMax = 4;  // 累计充值最大金额 -1 无限制
+  // 单笔充值最大金额 -1 无限制
+  double SingleRechargeMax = 3;
+  // 累计充值最大金额 -1 无限制
+  double AccumulateRechargeMax = 4;
 }
 
 // 登录回复
@@ -154,11 +160,12 @@ message EMResult {
   string PFType = 5;
   string PFID = 6;
 
-  int64 WlcStatus = 7; // -1 初始化状态 0 认证通过 1 认证中 2 认证失败
+  int64 WlcStatus = 7;
 
   WlcIndulgeInfo WlcIndulgeInfo = 8;
 
-  int64 GameAccountStatus = 9; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+  // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+  int64 GameAccountStatus = 9;
   int64 FreezeTime = 10; // 冻结时间
 }
 
@@ -166,6 +173,7 @@ message EMResult {
 message SendMobileMessageRequest {
   string SGameId = 1;
   string Sign = 2;
+  string DeviceNo = 3;
 
   string Mobile = 4;
   string SendType = 5;
@@ -391,5 +399,6 @@ message DeleteAccountRequest {
 
 message DeleteAccountResponse {
   CODE Code = 1;
-  int64 DeleteStatus = 2; // 0 未删除 1 冻结 2 删除
+  // 0 未删除 1 冻结 2 删除
+  int64 DeleteStatus = 2;
 }
