@@ -120,9 +120,9 @@ message Amount {
 
 请加工下单信息给前端进行转发
 
-TransactionRequest proto.encode之后为 下单信息
+base64(TransactionRequest proto.encode)之后为 下单信息
 
-最终透传字符串为：md5加密(base64加密(下单信息)+后端密匙)+下单信息  
+最终透传字符串为：md5加密(下单信息+后端密匙)+下单信息  
 
 后端密匙见签名规则
 
