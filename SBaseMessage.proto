@@ -174,6 +174,11 @@ message EMResult {
   // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
   int64 GameAccountStatus = 9;
   int64 FreezeTime = 10; // 冻结时间
+
+  // 账号UID,中台用户唯一ID
+  int64 AccountUid = 11;
+  // 游戏用户ID,游戏用户唯一ID
+  int64 GameUserId = 12;
 }
 
 //发送短信校验码接口
@@ -414,4 +419,21 @@ message DeleteAccountResponse {
   CODE Code = 1;
   // 0 未删除 1 冻结 2 删除
   int64 DeleteStatus = 2;
+}
+
+//解除账号冻结
+message UnfreezeAccountRequest {
+  // em参数
+  string E = 1;
+  string M = 2;
+
+  string SGameId = 3;
+  string Sign = 4;
+
+  string ReqTime = 5; // 请求时间
+  string DeviceNo = 6; // 设备号
+}
+
+message UnfreezeAccountResponse {
+  CODE Code = 1;
 }
