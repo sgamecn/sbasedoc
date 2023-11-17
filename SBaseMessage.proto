@@ -419,6 +419,8 @@ message DeleteAccountResponse {
   CODE Code = 1;
   // 0 未删除 1 冻结 2 删除
   int64 DeleteStatus = 2;
+  // 冻结时间
+  int64 FreezeTime = 3;
 }
 
 //解除账号冻结
@@ -435,5 +437,22 @@ message UnfreezeAccountRequest {
 }
 
 message UnfreezeAccountResponse {
+  CODE Code = 1;
+}
+
+//恢复账号
+message RecoverAccountRequest {
+  // em参数
+  string E = 1;
+  string M = 2;
+
+  string SGameId = 3;
+  string Sign = 4;
+
+  string ReqTime = 5; // 请求时间
+  string DeviceNo = 6; // 设备号
+}
+
+message RecoverAccountResponse {
   CODE Code = 1;
 }
