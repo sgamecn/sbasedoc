@@ -176,9 +176,9 @@ message EMResult {
   int64 FreezeTime = 10; // 冻结时间
 
   // 账号UID,中台用户唯一ID
-  int64 AccountUid = 11;
+  string AccountUid = 11;
   // 游戏用户ID,游戏用户唯一ID
-  int64 GameUserId = 12;
+  string GameUserId = 12;
 }
 
 //发送短信校验码接口
@@ -270,26 +270,6 @@ message TransactionRequestEncode {
   string DeviceNo = 7; // 设备号
 }
 
-//下单请求具体参数
-message TransactionRequest {
-  string GameOrderId = 1; // 游戏订单ID
-  string Desc = 2;  // 描述
-  Amount Amount = 3;  // 金额
-  string GameNotifyUrl = 4; // 游戏回调地址
-  string Attach = 5;  // 透传参数
-  string SGameId = 6; // 游戏ID 例如影三为 101
-  TAType Type = 7;  // 支付类型
-  bool IsSandbox = 8; // 是否沙盒测试
-
-  string ReqTime = 12;  // 请求时间
-
-  //可选参数
-  string UserId = 13; // 用户ID
-  string ServerId = 14; // 服务器ID
-  string RoleId = 15; // 角色ID
-  string RoleName = 16; // 角色名
-}
-
 //下单回复参数 SBase->Client
 message TransactionParam {
   bytes WeChatAppPayParam  = 1; // wechatAppPayParam Json结构 透传时为json.Marshal后的[]byte
@@ -332,19 +312,6 @@ message ApplePayVerifyIdTokenV1 {
 message AppleVerifyIdTokenResponse {
   CODE Code = 1;
   repeated string SuccessTransactionList = 2;   // 成功的订单列表
-}
-
-//发货
-message SendGoodsReq {
-  string OrderId = 1; // 订单ID
-  string Attach = 2;  // 透传参数
-
-  string Sign = 3;  // 签名
-  string ReqTime = 4; // 请求时间
-}
-
-message SendGoodsResp {
-  CODE  Code = 1;
 }
 
 //Wlc
