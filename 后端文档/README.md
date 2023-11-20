@@ -85,67 +85,70 @@ syntax = "proto3";
 
 //下单请求具体参数
 message TransactionRequest {
-  string GameOrderId = 1; // 游戏订单ID
-  string Desc = 2;  // 描述
-  Amount Amount = 3;  // 金额
-  string GameNotifyUrl = 4; // 游戏回调地址
-  string Attach = 5;  // 透传参数
-  string SGameId = 6; // 游戏ID 例如影三为 101
-  TAType Type = 7;  // 支付类型
-  bool IsSandbox = 8; // 是否沙盒测试
 
-  string ReqTime = 12;  // 请求时间
+  // 游戏ID，由中台分配给游戏服使用（例如影三为 101）
+  string SGameId = 1;
+
+  // 产品id（充值档位id），由中台分配给游戏服使用（如com.sgame.yzr3.648）
+  string ProductID = 2;
+
+  // 下单时间
+  string ReqTime = 3;
+
+  // 游戏回调地址
+  string GameNotifyUrl = 4;
+
+  // 透传参数
+  string Attach = 5;
+
+  // SDK下单信息(客户端拉起页面展示的订单信息)
+  // TA_WECHAT_APP = 0;   // 微信APP
+  // TA_WECHAT_NATIVE = 1; // 微信NATIVE
+  // TA_ALI = 2;     // 支付宝
+  // TA_APPLE = 3;        // 苹果
+  int32 ClientSdkType = 11;
+  string ClientSdkDesc = 12;
 
   //可选参数
-  string UserId = 13; // 用户ID
-  string ServerId = 14; // 服务器ID
-  string RoleId = 15; // 角色ID
-  string RoleName = 16; // 角色名
-}
-
-//下单
-enum TAType {
-  TA_WECHAT_APP = 0;   // 微信APP
-  TA_WECHAT_NATIVE  = 1; // 微信NATIVE
-  TA_ALI  = 2;     // 支付宝
-  TA_APPLE = 3;        // 苹果
-}
-
-// 货币信息
-message Amount {
-  double Total = 1;
-  string Currency = 2;
+  string CpOrderId = 21; // 游戏订单ID
+  string CpUserId = 22; // 用户ID
+  string CpServerId = 23; // 服务器ID
+  string CpRoleId = 24; // 角色ID
+  string CpRoleName = 25; // 角色名
+  string CpItemId = 26; // 游戏物品id
+  string CpItemName = 27; // 游戏物品名
 }
 ```
+具体数据由后端数据加工后，发送给前端，前端转发SBase进行下单
 
-请加工下单信息给前端进行转发
+具体数据加工方式为：
 
-base64(TransactionRequest proto.encode)之后为 下单信息
+base64加密(proto.Marshal(TransactionRequest))之后为 下单信息
 
-最终透传字符串为：md5加密(下单信息+后端密匙)+下单信息  
-
-后端密匙见签名规则
-
-[签名规则](#sign)
+最终透传字符串为：md5加密(下单信息+后端密匙)+下单信息 
 
 ### <a id="sendgoods">支付发货</a>
 
-服务器实现回调
+发货服务器实现对应接口
 
 ```protobuf
 syntax = "proto3";
 
 //发货
 message SendGoodsReq {
-  string OrderId = 1; // 订单ID
-  string Attach = 2;  // 透传参数
 
-  string Sign = 3;  // 签名 详见签名规则
+  string OrderId = 1; // 订单ID
+  string TransactionId = 2; // 交易ID
+  //  string Attach = 2;  // 透传参数
+
+  string Sign = 3;  // 签名
   string ReqTime = 4; // 请求时间
+
+  TransactionRequest transaction = 11; // 下单数据
 }
 
 message SendGoodsResp {
-  CODE  Code = 1; // 错误码  详见code中台常量定义
+  int32 Code = 1;
 }
 ```
 [签名规则](#sign)
@@ -179,9 +182,9 @@ enum CODE {
   SIGN_ERROR              = 112; //签名错误
   ACCOUNT_NOT_EXIST       = 113; //账号不存在
   EM_DECODER_ERROR        = 114; //em解码错误
-  INVALID_NAMESPACE       = 115; //无效的Namespace
+  //ACCOUNT_INFO_NOT_EXIST  = 115; //账号Info不存在
+
   IS_NOT_ADULT_LIMIT      = 116; //未成年人限制
-  MOBILE_BIND_NOT_OPEN    = 117; //手机绑定未开放
 
   LOGIN_TYP_NOT_OPEN      = 130; //未开放对应登录方式
   LOGIN_VERIFY_FAIL       = 132; //登录验证失败
@@ -189,10 +192,14 @@ enum CODE {
   LOGIN_QUERY_WLC_ERROR   = 134; //登录查询wlc失败
   LOGIN_EM_BAN            = 135; //登录em登录方式禁止 收到此错误码后，客户端应该删除本地的em登录方式
 
+  //Mobile_DEVICE_NO_FORBID = 150; //设备号禁止
+  //IP_FORBID               = 151; //IP禁止
+
   SEND_SMS_TOO_FAST       = 160; //发送短信过快
   VALIDATE_CODE_ERR       = 161; //验证码错误
   PAY_CALLBACK_ERROR      = 162; //支付回调错误
   MOBILE_EXIST            = 163; //手机账号已存在
+  SEND_BUSINESS_LIMIT     = 164; //业务限流
 
   WLC_CHECK_ERROR         = 180; //wlc校验失败
   WLC_TRACE_ERROR         = 181; //wlc上报失败

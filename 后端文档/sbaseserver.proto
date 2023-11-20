@@ -1,0 +1,68 @@
+﻿syntax = "proto3";
+
+package serverprotos;
+
+option go_package = "../sbaseserverproto";
+
+//下单请求具体参数
+message TransactionRequest {
+
+    // 游戏ID，由中台分配给游戏服使用（例如影三为 101）
+    string SGameId = 1;
+
+    // 产品id（充值档位id），由中台分配给游戏服使用（如com.sgame.yzr3.648）
+    string ProductID = 2;
+
+    // 下单时间
+    string ReqTime = 3;
+
+    // 游戏回调地址
+    string GameNotifyUrl = 4;
+
+    // 透传参数
+    string Attach = 5;
+
+    // SDK下单信息(客户端拉起页面展示的订单信息)
+    // TA_WECHAT_APP = 0;   // 微信APP
+    // TA_WECHAT_NATIVE = 1; // 微信NATIVE
+    // TA_ALI = 2;     // 支付宝
+    // TA_APPLE = 3;        // 苹果
+    int32 ClientSdkType = 11;
+    string ClientSdkDesc = 12;
+
+    //可选参数
+    string CpOrderId = 21; // 游戏订单ID
+    string CpUserId = 22; // 用户ID
+    string CpServerId = 23; // 服务器ID
+    string CpRoleId = 24; // 角色ID
+    string CpRoleName = 25; // 角色名
+    string CpItemId = 26; // 游戏物品id
+    string CpItemName = 27; // 游戏物品名
+}
+
+//发货
+message SendGoodsReq {
+
+    string OrderId = 1; // 订单ID
+    string TransactionId = 2; // 交易ID
+    //  string Attach = 2;  // 透传参数
+
+    string Sign = 3;  // 签名
+    string ReqTime = 4; // 请求时间
+
+    TransactionRequest transaction = 11; // 下单数据
+}
+
+//错误码
+//enum CODE {
+//    CODE_None = 0;
+//    SUCCESS = 200; //成功
+//    SERVICE_BUSY = 110; //服务器繁忙（内部逻辑错误）
+//    PARAM_MISS = 111; //参数缺失
+//    SIGN_ERROR = 112; //签名错误
+//    ACCOUNT_NOT_EXIST = 113; //账号不存在
+//}
+
+message SendGoodsResp {
+    int32 Code = 1;
+}
