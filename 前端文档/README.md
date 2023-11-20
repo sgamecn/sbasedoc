@@ -419,8 +419,12 @@ message EMResult {
 
   string PFType = 5; //平台类型 见PFType定义
   string PFID = 6;
-
-  int64 WlcStatus = 7; // 实名认证状态 -1 初始化状态 0 认证通过 1 认证中 2 认证失败
+  
+  //CheckStatusDefault CheckStatus = 0 // 未实名
+  //CheckStatusSuccess CheckStatus = 1 // 认证成功
+  //CheckStatusProcess CheckStatus = 2 // 认证中
+  //CheckStatusFailed  CheckStatus = 3 // 认证失败
+  int64 WlcStatus = 7; // 实名认证状态
 
   WlcIndulgeInfo WlcIndulgeInfo = 8;
 
