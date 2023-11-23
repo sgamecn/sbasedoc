@@ -28,6 +28,8 @@ EMLogin 为公司快捷登录 PFLogin 为平台登录，例如：微信，QQ....
 ### <a id="usertrace">用户行为上传</a> 
 路径：/WlcLoginTrace[README.md]
 
+https://testsbase.s-game.cn/sbase/WlcLoginTrace
+
 ```
 Method: POST
 ```
