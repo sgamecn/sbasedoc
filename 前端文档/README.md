@@ -65,15 +65,17 @@ Method: POST
 ```protobuf
 syntax = "proto3";
 
+//SNS账号登录
 message EmLoginRequest {
   // em参数
   string E = 2;
   string M = 3;
-  
+
   string SGameId = 4; // 游戏ID
-  string Sign = 5;  // 签名 详见签名规则
+  string Sign = 5;  // 签名
 
   string ReqTime = 6; // 请求时间
+  string DeviceNo = 7; // 设备号
 }
 
 // 响应参数 见通用登录回复
@@ -95,14 +97,15 @@ Method: POST
 ```protobuf
 syntax = "proto3";
 
+//微信登录
 message WechatLoginRequest {
-  
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名 详见签名规则
+  string Sign = 3;  // 签名
 
   string Code = 4; // 微信返回的code
 
   string ReqTime = 5; // 请求时间
+  string DeviceNo = 6; // 设备号
 }
 
 // 响应参数 见通用登录回复
@@ -126,15 +129,16 @@ Method: POST
 ```protobuf
 syntax = "proto3";
 
+//TapTap登录
 message TTLoginRequest {
-
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名 详见签名规则
+  string Sign = 3;  // 签名
 
   string AccessToken = 4; // TapTap返回的access_token
   string MacKey = 5;  // TapTap返回的mac_key
 
   string ReqTime = 6; // 请求时间
+  string DeviceNo = 7; // 设备号
 }
 
 // 响应参数 见通用登录回复
@@ -156,13 +160,13 @@ syntax = "proto3";
 
 //QQ登录
 message QQLoginRequest {
-
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名 详见签名规则
+  string Sign = 3;  // 签名
 
   string AccessToken = 4; // QQ返回的access_token
 
   string ReqTime = 5; // 请求时间
+  string DeviceNo = 6; // 设备号
 }
 
 // 响应参数 见通用登录回复
@@ -184,15 +188,16 @@ ContentType: application/json
 ```protobuf
 syntax = "proto3";
 
+//英雄登录
 message YXLoginRequest {
-  
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名 详见签名规则
+  string Sign = 3;  // 签名
 
   string Account = 4; // 英雄账号
   string Passwd = 5;  // 英雄密码
 
   string ReqTime = 6; // 请求时间
+  string DeviceNo = 7; // 设备号
 }
 
 // 响应参数 见通用登录回复
@@ -216,14 +221,14 @@ syntax = "proto3";
 
 //第三方登录
 message ThirdLoginRequest {
-
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名 详见签名规则
+  string Sign = 3;  // 签名
 
   string ChannelId = 4; // 渠道ID
   string CUid = 5;  // 渠道UID
 
   string ReqTime = 6; // 请求时间
+  string DeviceNo = 7; // 设备号
 }
 
 ```
@@ -244,14 +249,15 @@ ContentType: application/json
 ```protobuf
 syntax = "proto3";
 
+//Apple登录
 message AppleLoginRequest {
-  
   string SGameId = 2; // 游戏ID
-  string Sign = 3;  // 签名 详见签名规则
-  
+  string Sign = 3;  // 签名
+
   string Code = 4;  // 苹果返回的code
 
   string ReqTime = 5; // 请求时间
+  string DeviceNo = 6; // 设备号
 }
 
 // 响应参数 见通用登录回复
@@ -271,11 +277,13 @@ Method: POST
 ```protobuf
 syntax = "proto3";
 
+//发送短信校验码接口
 message SendMobileMessageRequest {
   string SGameId = 1;
-  string Sign = 2;  // 签名 详见签名规则
-  
-  string Mobile = 4; //手机号
+  string Sign = 2;
+  string DeviceNo = 3;
+
+  string Mobile = 4;
   string SendType = 5; //发送类型 1绑定 2登录
 
   string ReqTime = 6; // 请求时间
@@ -300,15 +308,16 @@ Method: POST
 ```protobuf
 syntax = "proto3";
 
+//绑定手机号码接口
 message BindMobileRequest {
   string SGameId  = 1;
-  string Sign = 2;  // 签名 详见签名规则
-  
-  string Mobile = 4;  //手机号
-  string DeviceNo = 5;  //设备号
-  string ValidateCode   = 6;  //验证码
-  string ChannelId  = 7;    //渠道ID
-  string CUid = 8;  //渠道用户ID
+  string Sign = 2;
+
+  string Mobile = 4;
+  string DeviceNo = 5;
+  string ValidateCode   = 6;
+  string ChannelId  = 7;
+  string CUid = 8;
 
   string ReqTime = 9; // 请求时间
 }
@@ -334,16 +343,17 @@ ContentType: application/json
 ```protobuf
 syntax = "proto3";
 
-message MobileLoginRequest {
+message   MobileLoginRequest {
   string SGameId = 1;
-  string Sign = 2;  // 签名 详见签名规则
-  
+  string Sign = 2;
+
   string Mobile = 4;
   string DeviceNo = 5;
   string ValidateCode   = 6;
 
   string ReqTime = 7; // 请求时间
 }
+
 ```
 [签名规则](#sign)
 
@@ -370,6 +380,7 @@ message QueryMobileBindStatus {
   string Sign = 4;  // 签名
 
   string ReqTime = 6; // 请求时间
+  string DeviceNo = 7; // 设备号
 }
 
 enum TipStatus {
@@ -382,7 +393,7 @@ enum TipStatus {
 message QueryMobileBindStatusResponse {
   CODE Code = 1;
   int64 Status = 2; // 0 未绑定 1 已绑定
-  TipStatus TipStatus = 3;
+  TipStatus TipStatus = 3; // 0 不弹窗 1 弹窗可跳过 2 弹窗不可跳过
 }
 
 ```
@@ -403,33 +414,33 @@ message WlcIndulgeInfo {
   bool IsAdult = 1; // 是否成年
   int64 UserBirthday = 2; // 用户生日
 
-  double SingleRechargeMax = 3;  // 单笔充值最大金额 -1 无限制
-  double AccumulateRechargeMax = 4;  // 累计充值最大金额 -1 无限制
+  // 单笔充值最大金额 -1 无限制
+  double SingleRechargeMax = 3;
+  // 累计充值最大金额 -1 无限制
+  double AccumulateRechargeMax = 4;
 }
 
 // 登录回复
 message EMResult {
-  CODE Code = 1;  //参考 code中台常量定义
+  CODE Code = 1;
+  repeated AccountInfo AccountInfos = 2;
+}
 
-  // em参数
-  string E = 2;
-  string M = 3;
-
-  string DisplayName = 4;
-
-  string PFType = 5; //平台类型 见PFType定义
-  string PFID = 6;
-  
-  //CheckStatusDefault CheckStatus = 0 // 未实名
-  //CheckStatusSuccess CheckStatus = 1 // 认证成功
-  //CheckStatusProcess CheckStatus = 2 // 认证中
-  //CheckStatusFailed  CheckStatus = 3 // 认证失败
-  int64 WlcStatus = 7; // 实名认证状态
-
-  WlcIndulgeInfo WlcIndulgeInfo = 8;
-
-  int64 GameAccountStatus = 9; // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
-  int64 FreezeTime = 10; // 冻结时间
+message AccountInfo {
+  // 账号UID,中台用户唯一ID
+  string AccountUid = 1;
+  // 游戏用户ID,游戏用户唯一ID
+  string GameUserId = 2;
+  string DisplayName = 3;
+  string PFType = 4;
+  string PFId = 5;
+  int64 WlcStatus = 6;
+  WlcIndulgeInfo WlcIndulgeInfo = 7;
+  // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+  int64 GameAccountStatus = 8;
+  int64 FreezeTime = 9;
+  string E = 10;
+  string M = 11;
 }
 ```
 
@@ -458,7 +469,7 @@ Method: POST
 ```protobuf
 syntax = "proto3";
 
-//Wlc上报(实名认证) Client->SBase
+//实名认证 Client->SBase
 message WlcCheckReq {
   // em参数
   string E = 1;
@@ -468,15 +479,18 @@ message WlcCheckReq {
   string IdNum = 4;
 
   string SGameId = 5; // 游戏ID
-  string Sign = 6;  // 签名 详见签名规则
+  string Sign = 6;  // 签名
+
+  string ReqTime = 7; // 请求时间
+  string DeviceNo = 8; // 设备号
 }
 
-//Wlc上报(实名认证)回复 SBase->Client
+//实名认证回复 SBase->Client
 message WlcCheckResp {
-  CODE Code = 1;  //参考 code中台常量定义
-  int64 Status = 2; // 实名认证状态 0 认证成功 1认证中 2 认证失败
-  WlcIndulgeInfo WlcIndulgeInfo = 3;  // 防沉迷信息
-  bool CanPlay = 4; // 是否可以游戏
+  CODE Code = 1;
+  int64 Status = 2;
+  WlcIndulgeInfo WlcIndulgeInfo = 3;
+  bool CanPlay = 4;
 }
 
 //WlcIndulgeInfo 防沉迷信息
@@ -514,6 +528,7 @@ ContentType: application/json
 syntax = "proto3";
 
 //下单请求 Server->Client->SBase 服务器加工消息，客户端不用关心
+//下单请求
 message TransactionRequestEncode {
   string E = 1;
   string M = 2;
@@ -521,7 +536,16 @@ message TransactionRequestEncode {
   string Sign = 4;
   string ReqTime = 5;
 
-  string encodeStr = 6; //有后端处理后的支付加密信息.前端透传给SBase 即可
+  string encodeStr = 6; //服务器加密字段
+  string DeviceNo = 7; // 设备号
+}
+
+//下单
+enum TAType {
+  TA_WECHAT_APP = 0;   // 微信APP
+  TA_WECHAT_NATIVE  = 1; // 微信NATIVE
+  TA_ALI  = 2;     // 支付宝
+  TA_APPLE = 3;        // 苹果
 }
 
 //下单请求回复 Client->SBase
@@ -579,13 +603,17 @@ syntax = "proto3";
 
 //Apple支付回调 Client->SBase
 message ApplePayVerifyIdTokenV1 {
-  string SGameId = 1; // 游戏ID
-  string Receipt = 2; // 苹果返回的receipt
+  string SGameId = 1;
+  string Receipt = 2;
+
+  string Sign = 3;  // 签名
+  string ReqTime = 4; // 请求时间
+  string DeviceNo = 5; // 设备号
 }
 
 //Apple支付回调 SBase->Client
 message AppleVerifyIdTokenResponse {
-  CODE Code = 1;  //参考 code中台常量定义
+  CODE Code = 1;
   repeated string SuccessTransactionList = 2;   // 成功的订单列表
 }
 
