@@ -44,20 +44,26 @@ message WLcLoginTraceReq {
   string Sign = 4;  // 签名 详见签名规则
 }
 
+//Wlc上报登录轨迹结构
+message WlcLoginTrace {
+  // 游戏用户ID（专门用于上传行为的ID,由前端回传）
+  string Uid = 1;
+  BTType BT = 2;
+  // 玩家本次行为的登录时间（同一玩家本次完整轨迹，上线与下线进行行为上传是LoginTime 务必一致）
+  string LoginTime = 3;
+}
+
+//行为类型
 enum BTType {
   BTTypeLogout = 0; // 下线
   BTTypeLogin = 1; // 上线
 }
 
-message WlcLoginTrace {
-  string Uid = 1; // 游戏用户ID (特殊处理专门用于上传的ID，由前端或者良哥回传)
-  BTType BT = 2;  // 行为类型
+//Wlc上报登录轨迹回复
+message WLcLoginTraceResp {
+  int32 Code = 1;
 }
 
-//Wlc上报登录轨迹回复 SBase->Client
-message WLcLoginTraceResp {
-  CODE Code = 1;  // 错误码  详见code中台常量定义
-}
 ```
 [签名规则](#sign)
 
@@ -178,6 +184,7 @@ message SendGoodsResp {
 ```protobuf
 syntax = "proto3";
 
+//错误码
 enum CODE {
   DEFAULT 			           = 0;
   SUCCESS                 = 200; //成功
@@ -204,13 +211,15 @@ enum CODE {
   PAY_CALLBACK_ERROR      = 162; //支付回调错误
   MOBILE_EXIST            = 163; //手机账号已存在
   SEND_BUSINESS_LIMIT     = 164; //业务限流
+  MOBILE_NUM_ERROR        = 165; //手机号码格式错误
+
+  S_GAME_ID_NOT_EXIST     = 170; //s_game_id不存在
+  ID_NUM_ERROR            = 176; //身份证号码错误
 
   WLC_CHECK_ERROR         = 180; //wlc校验失败
   WLC_TRACE_ERROR         = 181; //wlc上报失败
   WLC_QUERY_ERROR         = 182; //wlc查询失败
-
-  S_GAME_ID_NOT_EXIST     = 170; //s_game_id不存在
-  ID_NUM_ERROR            = 176; //身份证号码错误
+  WLC_ID_NUM_ERROR        = 183; //身份证号格式校验失败
 
   PAY_TYP_NOT_OPEN              = 300; //未开放对应支付方式
   PAY_TRANSACTION_PARAM_ERROR   = 301; //下单失败
