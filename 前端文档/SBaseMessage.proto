@@ -158,29 +158,25 @@ message WlcIndulgeInfo {
 
 // 登录回复
 message EMResult {
-  CODE Code = 1;  //参考 code中台常量定义
+  CODE Code = 1;
+  repeated AccountInfo AccountInfos = 2;
+}
 
-  // em参数
-  string E = 2;
-  string M = 3;
-
-  string DisplayName = 4;
-
-  string PFType = 5;
-  string PFID = 6;
-
-  int64 WlcStatus = 7;
-
-  WlcIndulgeInfo WlcIndulgeInfo = 8;
-
-  // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
-  int64 GameAccountStatus = 9;
-  int64 FreezeTime = 10; // 冻结时间
-
+message AccountInfo {
   // 账号UID,中台用户唯一ID
-  string AccountUid = 11;
+  string AccountUid = 1;
   // 游戏用户ID,游戏用户唯一ID
-  string GameUserId = 12;
+  string GameUserId = 2;
+  string DisplayName = 3;
+  string PFType = 4;
+  string PFId = 5;
+  int64 WlcStatus = 6;
+  WlcIndulgeInfo WlcIndulgeInfo = 7;
+  // 账号状态 0 正常 1 冻结 2 删除 (冻结情况下禁止em登录)
+  int64 GameAccountStatus = 8;
+  int64 FreezeTime = 9;
+  string E = 10;
+  string M = 11;
 }
 
 //发送短信校验码接口
@@ -243,6 +239,11 @@ message QueryMobileBindStatusResponse {
   CODE Code = 1;
   int64 Status = 2; // 0 未绑定 1 已绑定
   TipStatus TipStatus = 3;
+}
+
+message MobileBindInfo {
+  string Mobile = 1;
+  int64 Status = 2; // 0 未绑定 1 已绑定
 }
 
 //支付
@@ -318,7 +319,7 @@ message AppleVerifyIdTokenResponse {
 
 //Wlc
 
-//Wlc上报(实名认证) Client->SBase
+//实名认证 Client->SBase
 message WlcCheckReq {
     // em参数
     string E = 1;
@@ -334,39 +335,12 @@ message WlcCheckReq {
     string DeviceNo = 8; // 设备号
 }
 
-//Wlc上报(实名认证)回复 SBase->Client
+//实名认证回复 SBase->Client
 message WlcCheckResp {
   CODE Code = 1;
   int64 Status = 2;
   WlcIndulgeInfo WlcIndulgeInfo = 3;
   bool CanPlay = 4;
-}
-
-//行为类型
-enum BTType {
-  BTTypeLogout = 0; // 下线
-  BTTypeLogin = 1; // 上线
-}
-
-//Wlc上报登录轨迹结构
-message WlcLoginTrace {
-  string Uid = 1; // 游戏用户ID
-  BTType BT = 2;
-}
-
-//Wlc上报登录轨迹
-message WLcLoginTraceReq {
-  repeated WlcLoginTrace Collections = 1;
-
-  string SGameId = 2;
-  string ReqTime = 3;
-  string Sign = 4;
-  string DeviceNo = 5;
-}
-
-//Wlc上报登录轨迹回复 SBase->Client
-message WLcLoginTraceResp {
-  CODE Code = 1;
 }
 
 //删除账号

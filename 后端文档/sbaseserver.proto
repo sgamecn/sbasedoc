@@ -66,3 +66,31 @@ message SendGoodsReq {
 message SendGoodsResp {
     int32 Code = 1;
 }
+
+//行为类型
+enum BTType {
+    BTTypeLogout = 0; // 下线
+    BTTypeLogin = 1; // 上线
+}
+
+//Wlc上报登录轨迹结构
+message WlcLoginTrace {
+    string Uid = 1; // 游戏用户ID
+    BTType BT = 2;
+    string LoginTime = 3; // 登录时间
+}
+
+//Wlc上报登录轨迹
+message WLcLoginTraceReq {
+    repeated WlcLoginTrace Collections = 1;
+
+    string SGameId = 2;
+    string ReqTime = 3;
+    string Sign = 4;
+    string DeviceNo = 5;
+}
+
+//Wlc上报登录轨迹回复 SBase->Client
+message WLcLoginTraceResp {
+    int32 Code = 1;
+}
