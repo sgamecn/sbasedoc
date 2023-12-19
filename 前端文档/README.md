@@ -441,6 +441,8 @@ message AccountInfo {
   int64 FreezeTime = 9;
   string E = 10;
   string M = 11;
+  int64 LastLoginTime = 12;
+  int64 ChannelId = 13;
 }
 ```
 
